@@ -1,0 +1,25 @@
+package com.fst.back_etat_civil.repository;
+
+import java.util.List;
+import java.util.Optional;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
+import com.fst.back_etat_civil.model.User;
+
+@Repository
+public interface UserRepository extends JpaRepository<User, Long> {
+
+
+    Optional<User> findByUsername(String username);
+    List<User> findUsersById(Long Id);
+
+    //List<Users> findByUsername(String username);
+
+    Boolean existsByUsername(String username);
+
+    Boolean existsByEmail(String email);
+
+
+}
