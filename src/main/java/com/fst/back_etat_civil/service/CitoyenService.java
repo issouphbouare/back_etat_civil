@@ -122,9 +122,11 @@ public class CitoyenService {
             // citoyenDto.setProfessionMere(citoyen.getProfessionMere());
             citoyenDto.setCivilite(citoyen.getCivilite());
             citoyenDto.setPrenomPere(citoyen.getPrenomPere());
-            citoyen.setRue(citoyen.getRue());
-            citoyen.setPorte(citoyen.getPorte());
-            citoyen.setAutre(citoyen.getAutre());
+            citoyenDto.setRue(citoyen.getRue());
+            citoyenDto.setPorte(citoyen.getPorte());
+            citoyenDto.setPortrait(citoyen.getPortrait());
+            citoyenDto.setAutre(citoyen.getAutre());
+            citoyenDto.setCle(citoyen.getCle());
             //citoyenDto.setProfessionPere(citoyen.getProfessionPere());
 
 
@@ -200,6 +202,8 @@ public class CitoyenService {
             citoyen.setRue(updatedCitoyenDto.getRue());
             citoyen.setPorte(updatedCitoyenDto.getPorte());
             citoyen.setAutre(updatedCitoyenDto.getAutre());
+            citoyen.setPortrait(updatedCitoyenDto.getPortrait());
+            citoyen.setCle(updatedCitoyenDto.getCle());
             // // Vérifier si LieuNaissance est null avant d'accéder à son ID
 
 
@@ -267,7 +271,7 @@ public class CitoyenService {
 
     // Méthodes utilitaires de mappage entre les entités et les DTO
 
-    private CitoyenDto mapToDto(Citoyen citoyen) {
+    public CitoyenDto mapToDto(Citoyen citoyen) {
         CitoyenDto citoyenDto = new CitoyenDto();
         citoyenDto.setId(citoyen.getId());
         citoyenDto.setNiciv(citoyen.getNiciv());
@@ -288,9 +292,11 @@ public class CitoyenService {
         citoyenDto.setProfession(citoyen.getProfession().getId());
         citoyenDto.setProfessionPere(citoyen.getProfessionPere().getId());
         citoyenDto.setProfessionMere(citoyen.getProfessionMere().getId());
-        citoyen.setRue(citoyenDto.getRue());
-        citoyen.setPorte(citoyenDto.getPorte());
-        citoyen.setAutre(citoyenDto.getAutre());
+        citoyenDto.setRue(citoyen.getRue());
+        citoyenDto.setPorte(citoyen.getPorte());
+        citoyenDto.setPortrait(citoyen.getPortrait());
+        citoyenDto.setAutre(citoyen.getAutre());
+        citoyenDto.setCle(citoyen.getCle());
         return citoyenDto;
     }
 
@@ -319,7 +325,9 @@ public class CitoyenService {
         //citoyen.setProfessionPere(citoyenDto.getProfessionPere());
         citoyen.setRue(citoyenDto.getRue());
         citoyen.setPorte(citoyenDto.getPorte());
+        citoyen.setPortrait(citoyenDto.getPortrait());
         citoyen.setAutre(citoyenDto.getAutre());
+        citoyen.setCle(citoyenDto.getCle());
 
 
         return citoyen;

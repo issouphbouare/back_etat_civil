@@ -14,5 +14,6 @@ public interface CitoyenRepository extends JpaRepository<Citoyen, Long> {
 	Boolean existsByTelephone(String telephone);
 	List<Citoyen> findByCle(String cle);
 	Boolean existsByNiciv(String niciv);
+	Citoyen findByNiciv(String niciv);
 
 }

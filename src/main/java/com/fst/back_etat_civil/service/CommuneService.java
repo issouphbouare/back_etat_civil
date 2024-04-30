@@ -64,12 +64,12 @@ public class CommuneService {
         List<Commune> communes = communeRepository.findByCercle(cercle);
         List<CommuneDto> communeDtos = new ArrayList<>();
 
-        for (Commune commube : communes) {
+        for (Commune commune : communes) {
             CommuneDto communeDto = new CommuneDto();
-            communeDto.setId(commube.getId());
-            communeDto.setAutre(commube.getAutre());
-            communeDto.setNom(commube.getNom());
-            communeDto.setCode(commube.getCode());
+            communeDto.setId(commune.getId());
+            communeDto.setAutre(commune.getAutre());
+            communeDto.setNom(commune.getNom());
+            communeDto.setCode(commune.getCode());
 
             
 

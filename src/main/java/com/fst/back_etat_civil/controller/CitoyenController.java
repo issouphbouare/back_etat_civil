@@ -92,12 +92,15 @@ public class CitoyenController {
             
             //generation de cle avec genre , annee Naissance, lieu Naissance
             String cle=String.valueOf((citoyen.getGenre().equals("Homme"))?1:2)+
-        			String.valueOf(citoyen.getDateNaissance().getYear()%100)+
+        			String.valueOf(String.format("%02d", citoyen.getDateNaissance().getYear() % 100))+
         			lieu.get().getCode();
             citoyen1.setCle(cle);
              
-            //appel de methode pour generer la Niciv
+            //appel de methode pour generer la Niciv pr le citoyen
             citoyen1.setNiciv(NumeroNiciv(cle));
+            
+          //appel de methode pour generer la Niciv pr le citoyenDto
+            citoyen.setNiciv(NumeroNiciv(cle));
             
              if(!lieu.isPresent())
                  throw new ResponseStatusException(HttpStatus.NOT_FOUND,"VQF NOT FOUND");
