@@ -209,6 +209,13 @@
             <artifactId>commons-io</artifactId>
             <version>2.11.0</version> <!-- Version la plus récente -->
         </dependency>
+        
+        <dependency>
+            <groupId>net.sf.jasperreports</groupId>
+            <artifactId>jasperreports</artifactId>
+            <version>6.20.0</version>
+        </dependency>
+
 	</dependencies>
 
 	<build>

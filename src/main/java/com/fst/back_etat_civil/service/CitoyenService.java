@@ -154,14 +154,14 @@ public class CitoyenService {
             }
             
             if (citoyen.getProfessionPere() != null) {
-                citoyenDto.setProfessionPere(citoyen.getProfession().getId());
+                citoyenDto.setProfessionPere(citoyen.getProfessionPere().getId());
             } else {
                 // Gérer le cas où vqf est null, par exemple en définissant un ID par défaut
                 citoyenDto.setProfessionPere(1); // Remplacez -1 par une valeur appropriée
             }
             
             if (citoyen.getProfessionMere() != null) {
-                citoyenDto.setProfessionMere(citoyen.getProfession().getId());
+                citoyenDto.setProfessionMere(citoyen.getProfessionMere().getId());
             } else {
                 // Gérer le cas où vqf est null, par exemple en définissant un ID par défaut
                 citoyenDto.setProfessionMere(1); // Remplacez -1 par une valeur appropriée
