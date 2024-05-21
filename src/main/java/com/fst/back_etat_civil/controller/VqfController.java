@@ -3,6 +3,7 @@ package com.fst.back_etat_civil.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -13,10 +14,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
 import com.fst.back_etat_civil.dto.VqfDto;
+import com.fst.back_etat_civil.model.Vqf;
 import com.fst.back_etat_civil.repository.VqfRepository;
 import com.fst.back_etat_civil.service.VqfService;
 @CrossOrigin(origins = "*")
@@ -74,5 +77,15 @@ public class VqfController {
     public ResponseEntity<Void> deleteVqf(@PathVariable Long id) {
         vqfService.deleteVqf(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+    
+    @GetMapping("/search")
+    public ResponseEntity<Page<Vqf>> search(
+            @RequestParam String keyword,
+            @RequestParam int page,
+            @RequestParam int size
+    ) {
+        Page<Vqf> vqfs = vqfService.searchVqfs(keyword, page, size);
+        return ResponseEntity.ok(vqfs);
     }
 }

@@ -6,6 +6,10 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -15,6 +19,7 @@ import com.fst.back_etat_civil.dto.CercleDto;
 import com.fst.back_etat_civil.dto.CommuneDto;
 import com.fst.back_etat_civil.dto.VqfDto;
 import com.fst.back_etat_civil.model.Cercle;
+import com.fst.back_etat_civil.model.Citoyen;
 import com.fst.back_etat_civil.model.Commune;
 import com.fst.back_etat_civil.model.Vqf;
 import com.fst.back_etat_civil.repository.CommuneRepository;
@@ -172,4 +177,11 @@ public class VqfService {
         vqf.setAutre(vqfDto.getAutre());
         return vqf;
     }
+    
+    public Page<Vqf> searchVqfs(String searchTerm, int page, int size) {
+    	Sort sort = Sort.by(Sort.Direction.ASC, "code");
+        Pageable pageable = PageRequest.of(page, size, sort);
+        return vqfRepository.searchByKeywordInAllColumns(searchTerm, pageable);
+    }
+
 }

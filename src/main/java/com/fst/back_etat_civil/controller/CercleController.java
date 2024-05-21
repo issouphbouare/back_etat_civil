@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -14,16 +15,17 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
 import com.fst.back_etat_civil.dto.CercleDto;
 import com.fst.back_etat_civil.model.Cercle;
 import com.fst.back_etat_civil.model.Region;
+import com.fst.back_etat_civil.model.Vqf;
 import com.fst.back_etat_civil.repository.CercleRepository;
 import com.fst.back_etat_civil.repository.RegionRepository;
 import com.fst.back_etat_civil.service.CercleService;
-import com.fst.back_etat_civil.service.RegionService;
 
 @CrossOrigin(origins = "*")
 @RestController
@@ -33,8 +35,7 @@ public class CercleController {
     private CercleService cercleService;
     @Autowired
     RegionRepository regionRepository;
-    @Autowired
-    private RegionService regionService;
+   
     @Autowired
     private CercleRepository cercleRepository;
 
@@ -107,5 +108,15 @@ public class CercleController {
     public ResponseEntity<Void> deleteCercle(@PathVariable long id) {
         cercleService.deleteCercle(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+    
+    @GetMapping("/search")
+    public ResponseEntity<Page<Cercle>> search(
+            @RequestParam String keyword,
+            @RequestParam int page,
+            @RequestParam int size
+    ) {
+        Page<Cercle> cercles = cercleService.searchCercles(keyword, page, size);
+        return ResponseEntity.ok(cercles);
     }
 }

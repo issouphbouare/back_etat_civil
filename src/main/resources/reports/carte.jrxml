@@ -271,7 +271,7 @@
 				<textFieldExpression><![CDATA[$P{adresse}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="165" y="240" width="250" height="30" uuid="0586aa8a-0664-432e-80dc-883ea7c9a24e"/>
+				<reportElement x="150" y="240" width="281" height="30" uuid="0586aa8a-0664-432e-80dc-883ea7c9a24e"/>
 				<textElement textAlignment="Center">
 					<font size="11" isBold="true"/>
 				</textElement>

@@ -6,6 +6,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -331,6 +332,12 @@ public class CitoyenService {
 
 
         return citoyen;
+    }
+    
+    public Page<Citoyen> searchCitoyens(String searchTerm, int page, int size) {
+    	Sort sort = Sort.by(Sort.Direction.DESC, "id");
+        Pageable pageable = PageRequest.of(page, size, sort);
+        return citoyenRepository.searchByKeywordInAllColumns(searchTerm, pageable);
     }
 
 }

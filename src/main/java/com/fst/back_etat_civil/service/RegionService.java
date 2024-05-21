@@ -5,6 +5,10 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.webjars.NotFoundException;
 
@@ -84,5 +88,11 @@ public class RegionService {
         region.setNom(regionDto.getNom());
         region.setAutre(regionDto.getAutre());
         return region;
+    }
+    
+    public Page<Region> searchRegions(String searchTerm, int page, int size) {
+    	Sort sort = Sort.by(Sort.Direction.ASC, "code");
+        Pageable pageable = PageRequest.of(page, size, sort);
+        return regionRepository.searchByKeywordInAllColumns(searchTerm, pageable);
     }
 }

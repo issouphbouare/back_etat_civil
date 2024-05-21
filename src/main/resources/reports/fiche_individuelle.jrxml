@@ -131,29 +131,29 @@
 				<imageExpression><![CDATA[$P{imageUrl}]]></imageExpression>
 			</image>
 			<staticText>
-				<reportElement x="-10" y="150" width="50" height="15" uuid="fd3d7f6b-b93f-4660-8c29-860b632c1cc1"/>
-				<textElement textAlignment="Right">
+				<reportElement x="-10" y="150" width="50" height="20" uuid="fd3d7f6b-b93f-4660-8c29-860b632c1cc1"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="11" isBold="true"/>
 				</textElement>
 				<text><![CDATA[N° Niciv : ]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="40" y="150" width="170" height="15" uuid="06a61317-5cda-4648-b900-c5ac74d5aaae"/>
-				<textElement>
+				<reportElement x="40" y="150" width="170" height="20" uuid="06a61317-5cda-4648-b900-c5ac74d5aaae"/>
+				<textElement verticalAlignment="Middle">
 					<font size="11" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{niciv}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="280" y="150" width="150" height="15" uuid="e9b6e463-9e9c-4630-8853-d3929821fca1"/>
-				<textElement>
+				<reportElement x="280" y="150" width="150" height="20" uuid="e9b6e463-9e9c-4630-8853-d3929821fca1"/>
+				<textElement verticalAlignment="Middle">
 					<font size="11" isBold="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$P{niciv}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$P{id}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="230" y="150" width="50" height="15" uuid="7e93e623-d343-414b-ba37-a15573c19b36"/>
-				<textElement textAlignment="Left">
+				<reportElement x="230" y="150" width="50" height="20" uuid="7e93e623-d343-414b-ba37-a15573c19b36"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
 					<font size="11" isBold="true"/>
 				</textElement>
 				<text><![CDATA[N° code : ]]></text>
@@ -432,6 +432,20 @@
 					<font size="11" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{adresse}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="120" y="275" width="70" height="15" uuid="42f61487-e37a-4b39-bef4-51a6e093417a"/>
+				<textElement textAlignment="Left">
+					<font size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Telephone : ]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="190" y="275" width="150" height="15" uuid="ec5aa145-8ae3-4669-9c09-2b04b419235a"/>
+				<textElement>
+					<font size="11" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{telephone}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>

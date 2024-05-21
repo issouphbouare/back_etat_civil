@@ -5,11 +5,16 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.webjars.NotFoundException;
 
 import com.fst.back_etat_civil.dto.ProfessionDto;
 import com.fst.back_etat_civil.model.Profession;
+import com.fst.back_etat_civil.model.Region;
 import com.fst.back_etat_civil.repository.ProfessionRepository;
 
 @Service
@@ -74,5 +79,11 @@ public class ProfessionService {
         Profession profession = new Profession();
         profession.setLibelle(professionDto.getLibelle());
         return profession;
+    }
+    
+    public Page<Profession> searchProfessions(String searchTerm, int page, int size) {
+    	Sort sort = Sort.by(Sort.Direction.ASC, "libelle");
+        Pageable pageable = PageRequest.of(page, size, sort);
+        return professionRepository.searchByKeywordInAllColumns(searchTerm, pageable);
     }
 }

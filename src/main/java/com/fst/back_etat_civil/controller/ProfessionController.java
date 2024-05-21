@@ -3,6 +3,7 @@ package com.fst.back_etat_civil.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -13,10 +14,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
 import com.fst.back_etat_civil.dto.ProfessionDto;
+import com.fst.back_etat_civil.model.Profession;
+import com.fst.back_etat_civil.model.Region;
 import com.fst.back_etat_civil.repository.ProfessionRepository;
 import com.fst.back_etat_civil.service.ProfessionService;
 
@@ -67,6 +71,16 @@ public class ProfessionController {
     public ResponseEntity<Void> deleteProfession(@PathVariable Long id) {
         professionService.deleteProfession(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+    
+    @GetMapping("/search")
+    public ResponseEntity<Page<Profession>> search(
+            @RequestParam String keyword,
+            @RequestParam int page,
+            @RequestParam int size
+    ) {
+        Page<Profession> professions = professionService.searchProfessions(keyword, page, size);
+        return ResponseEntity.ok(professions);
     }
 }
 

@@ -7,6 +7,9 @@ import lombok.ToString;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.util.Arrays;
 import java.util.Date;
 
@@ -40,8 +43,8 @@ public class Citoyen {
     private Date dateNaissance;
 
     private String telephone;
-
-    @ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+    //@JsonIgnore
+    @ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
     @JoinColumn(name = "prof_id")
     private Profession profession;
 
@@ -59,8 +62,8 @@ public class Citoyen {
     
     private String prenomPere;
 
-
-    @ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+   //@JsonIgnore
+    @ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
     @JoinColumn(name = "profP_id")
     private Profession professionPere;
 
@@ -71,16 +74,18 @@ public class Citoyen {
 
     @Column( name = "prenom_mere")
     private String prenomMere;
-
-    @ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+    //@JsonIgnore
+    @ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
     @JoinColumn(name = "profM_id")
     private Profession professionMere;
 
-    @ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+    //@JsonIgnore
+    @ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
     @JoinColumn(name = "lieuNaissance_id")
     private Vqf lieuNaissance;
     
-    @ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+    //@JsonIgnore
+    @ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
     @JoinColumn(name = "adresse_id")
     private Vqf adresse;
     
