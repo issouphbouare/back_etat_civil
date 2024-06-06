@@ -188,7 +188,7 @@ public class CitoyenService {
         if (citoyenData.isPresent()) {
             Citoyen citoyen = citoyenData.get();
             // Mettre à jour les champs de l'citoyen avec les valeurs fournies dans updatedCitoyenDto
-            citoyen.setNiciv(updatedCitoyenDto.getNiciv());
+            //citoyen.setNiciv(updatedCitoyenDto.getNiciv());
             citoyen.setNom(updatedCitoyenDto.getNom());
             citoyen.setPrenom(updatedCitoyenDto.getPrenom());
             citoyen.setTelephone(updatedCitoyenDto.getTelephone());
@@ -203,8 +203,8 @@ public class CitoyenService {
             citoyen.setRue(updatedCitoyenDto.getRue());
             citoyen.setPorte(updatedCitoyenDto.getPorte());
             citoyen.setAutre(updatedCitoyenDto.getAutre());
-            citoyen.setPortrait(updatedCitoyenDto.getPortrait());
-            citoyen.setCle(updatedCitoyenDto.getCle());
+            //citoyen.setPortrait(updatedCitoyenDto.getPortrait());
+            //citoyen.setCle(updatedCitoyenDto.getCle());
             // // Vérifier si LieuNaissance est null avant d'accéder à son ID
 
 
@@ -220,7 +220,89 @@ public class CitoyenService {
          // Récupérer l adresse correspondant à l'ID fourni dans updatedCitoyenDto
             Optional<Vqf> adresseData = vqfRepository.findById(updatedCitoyenDto.getAdresse());
             if (adresseData.isPresent()) {
-                citoyen.setLieuNaissance(adresseData.get());
+                citoyen.setAdresse(adresseData.get());
+            } else {
+                // Gérer le cas où aucun Vqf correspondant n'est trouvé
+                throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Adresse non trouvé avec l'ID : " + updatedCitoyenDto.getAdresse());
+            }
+            
+         // Récupérer la profession correspondant à l'ID fourni dans updatedCitoyenDto
+            Optional<Profession> profData = professionRepository.findById(updatedCitoyenDto.getProfession());
+            if (profData.isPresent()) {
+                citoyen.setProfession(profData.get());
+            } else {
+                // Gérer le cas où aucun Vqf correspondant n'est trouvé
+                throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Profession non trouvé avec l'ID : " + updatedCitoyenDto.getProfession());
+            }
+            
+         // Récupérer la profession du pere correspondant à l'ID fourni dans updatedCitoyenDto
+            Optional<Profession> profPData = professionRepository.findById(updatedCitoyenDto.getProfessionPere());
+            if (profPData.isPresent()) {
+                citoyen.setProfessionPere(profPData.get());
+            } else {
+                // Gérer le cas où aucun Vqf correspondant n'est trouvé
+                throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Profession non trouvé avec l'ID : " + updatedCitoyenDto.getProfessionPere());
+            }
+            
+         // Récupérer la profession de la mere correspondant à l'ID fourni dans updatedCitoyenDto
+            Optional<Profession> profMData = professionRepository.findById(updatedCitoyenDto.getProfessionMere());
+            if (profMData.isPresent()) {
+                citoyen.setProfessionMere(profMData.get());
+            } else {
+                // Gérer le cas où aucun Vqf correspondant n'est trouvé
+                throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Profession non trouvé avec l'ID : " + updatedCitoyenDto.getProfessionMere());
+            }
+
+            // Enregistrer les modifications dans la base de données
+            Citoyen updatedCitoyen = citoyenRepository.save(citoyen);
+
+            // Convertir l'citoyen mise à jour en CitoyenDto et la retourner
+            return mapToDto(updatedCitoyen);
+        } else {
+            // Gérer le cas où aucune citoyen avec cet ID n'est trouvée
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Citoyen non trouvée avec l'ID : " + id);
+        }
+    }
+    
+    
+    public CitoyenDto updatePortrait(long id, CitoyenDto updatedCitoyenDto) {
+        Optional<Citoyen> citoyenData = citoyenRepository.findById(id);
+        if (citoyenData.isPresent()) {
+            Citoyen citoyen = citoyenData.get();
+            // Mettre à jour les champs de l'citoyen avec les valeurs fournies dans updatedCitoyenDto
+            //citoyen.setNiciv(updatedCitoyenDto.getNiciv());
+            citoyen.setNom(updatedCitoyenDto.getNom());
+            citoyen.setPrenom(updatedCitoyenDto.getPrenom());
+            citoyen.setTelephone(updatedCitoyenDto.getTelephone());
+            citoyen.setDateNaissance(updatedCitoyenDto.getDateNaissance());
+            // // Vérifier si LieuNaissance est null avant d'accéder à son ID
+            citoyen.setGenre(updatedCitoyenDto.getGenre());
+            citoyen.setPrenomMere(updatedCitoyenDto.getPrenomMere());
+            citoyen.setNomMere(updatedCitoyenDto.getNomMere());
+            // // Vérifier si LieuNaissance est null avant d'accéder à son ID
+            citoyen.setCivilite(updatedCitoyenDto.getCivilite());
+            citoyen.setPrenomPere(updatedCitoyenDto.getPrenomPere());
+            citoyen.setRue(updatedCitoyenDto.getRue());
+            citoyen.setPorte(updatedCitoyenDto.getPorte());
+            citoyen.setAutre(updatedCitoyenDto.getAutre());
+            citoyen.setPortrait(updatedCitoyenDto.getPortrait());
+            //citoyen.setCle(updatedCitoyenDto.getCle());
+            // // Vérifier si LieuNaissance est null avant d'accéder à son ID
+
+
+
+            // Récupérer le lieu de naissance correspondant à l'ID fourni dans updatedCitoyenDto
+            Optional<Vqf> lieuData = vqfRepository.findById(updatedCitoyenDto.getLieuNaissance());
+            if (lieuData.isPresent()) {
+                citoyen.setLieuNaissance(lieuData.get());
+            } else {
+                // Gérer le cas où aucun Vqf correspondant n'est trouvé
+                throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Lieu de naissance non trouvé avec l'ID : " + updatedCitoyenDto.getLieuNaissance());
+            }
+         // Récupérer l adresse correspondant à l'ID fourni dans updatedCitoyenDto
+            Optional<Vqf> adresseData = vqfRepository.findById(updatedCitoyenDto.getAdresse());
+            if (adresseData.isPresent()) {
+                citoyen.setAdresse(adresseData.get());
             } else {
                 // Gérer le cas où aucun Vqf correspondant n'est trouvé
                 throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Adresse non trouvé avec l'ID : " + updatedCitoyenDto.getAdresse());

@@ -46,7 +46,7 @@ public class Commune {
 	    private String autre;
 
 
-	    @ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+	    @ManyToOne //(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
 		private Cercle cercle;
 		
 		@OneToMany(mappedBy = "commune", cascade = CascadeType.ALL)

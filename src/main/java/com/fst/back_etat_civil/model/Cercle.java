@@ -46,7 +46,7 @@ public class Cercle {
 	    private String autre;
 
 
-	    @ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+	    @ManyToOne //(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
 		private Region region;
 		
 		@OneToMany(mappedBy = "cercle", cascade = CascadeType.ALL)

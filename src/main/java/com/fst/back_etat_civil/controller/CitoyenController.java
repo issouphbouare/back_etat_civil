@@ -64,7 +64,7 @@ public class CitoyenController {
     @PostMapping
     public ResponseEntity<CitoyenDto> createCitoyen(@RequestBody CitoyenDto citoyen) {
     	
-    	if (citoyenRepository.existsByTelephone(citoyen.getTelephone())) {
+    	if (citoyen.getTelephone()!=null && citoyenRepository.existsByTelephone(citoyen.getTelephone())) {
             throw new ResponseStatusException(HttpStatus.CONFLICT,"Ce numero de telephone existe déjà");
         }else {
         try {
@@ -154,15 +154,6 @@ public class CitoyenController {
     public ResponseEntity<Void> deleteCitoyen(@PathVariable long id) {
         citoyenService.deleteCitoyen(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-    }
-    
-    
-    @GetMapping("/se")
-    public Page<Citoyen> searchCitoyens(
-            @RequestParam(name = "keyword") String keyword,
-            @RequestParam(name = "page", defaultValue = "0") int page,
-            @RequestParam(name = "size", defaultValue = "10") int size) {
-        return citoyenService.searchCitoyens(keyword, page, size);
     }
     
     

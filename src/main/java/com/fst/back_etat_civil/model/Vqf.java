@@ -48,12 +48,14 @@ public class Vqf {
 	    private String autre;
 
 
-	    @ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+	    @ManyToOne //(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
 		private Commune commune;
 		
-		@OneToMany(mappedBy = "lieuNaissance", cascade = CascadeType.ALL)
-		@JsonProperty(access = Access.WRITE_ONLY)
-		private List<Citoyen> citoyens;
+		/*
+		 * @OneToMany(mappedBy = "lieuNaissance", cascade = CascadeType.ALL)
+		 * 
+		 * @JsonProperty(access = Access.WRITE_ONLY) private List<Citoyen> citoyens;
+		 */
 
 
     

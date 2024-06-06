@@ -7,6 +7,7 @@ import java.util.Optional;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -27,14 +28,17 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
 import com.fst.back_etat_civil.model.ERole;
+import com.fst.back_etat_civil.model.Region;
 import com.fst.back_etat_civil.model.Role;
 import com.fst.back_etat_civil.model.User;
 import com.fst.back_etat_civil.repository.RoleRepository;
 import com.fst.back_etat_civil.repository.UserRepository;
 import com.fst.back_etat_civil.request.LoginRequest;
+import com.fst.back_etat_civil.request.PasswordRequest;
 import com.fst.back_etat_civil.request.SignupRequest;
 import com.fst.back_etat_civil.response.JwtResponse;
 import com.fst.back_etat_civil.security.jwt.JwtUtils;
+import com.fst.back_etat_civil.service.UserService;
 import com.fst.back_etat_civil.services.UserDetailsImpl;
 
 import io.swagger.annotations.ApiOperation;
@@ -48,6 +52,9 @@ public class AuthController {
 
     @Autowired
     UserRepository userRepository;
+    
+    @Autowired
+    UserService userService;
 
     @Autowired
     RoleRepository roleRepository;
@@ -83,28 +90,27 @@ public class AuthController {
                 userDetails.getEmail(),
                 roles));
     }
-
+    
     @PostMapping("/signup")
-    public ResponseEntity<?> registerUser( @RequestBody SignupRequest signUpRequest) {
-        System.out.println("\n \n test \n \n ");
+    public ResponseEntity<?> registerUser(@RequestBody SignupRequest signUpRequest) {
         if (userRepository.existsByUsername(signUpRequest.getUsername())) {
-            throw new ResponseStatusException(HttpStatus.CONFLICT,"Ce nom utilisateur existe déjà");
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "Ce nom utilisateur existe déjà");
         }
 
         if (userRepository.existsByEmail(signUpRequest.getEmail())) {
-            throw new ResponseStatusException(HttpStatus.CONFLICT,"Cet email existe déjà");
-        } else {
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "Cet email existe déjà");
+        }
 
         // Create new user's account
-        User users = new User();
-    users.setUsername(signUpRequest.getUsername());
-    users.setEmail(signUpRequest.getEmail());
-    users.setPassword(encoder.encode(signUpRequest.getPassword()));
+        User user = new User();
+        user.setUsername(signUpRequest.getUsername());
+        user.setEmail(signUpRequest.getEmail());
+        user.setPassword(encoder.encode(signUpRequest.getPassword()));
         Set<String> strRoles = signUpRequest.getRole();
         Set<Role> roles = new HashSet<>();
 
         if (strRoles == null) {
-            Role userRole = roleRepository.findByName(ERole.ROLE_ADMIN)
+            Role userRole = roleRepository.findByName(ERole.ROLE_USER)
                     .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
             roles.add(userRole);
         } else {
@@ -114,13 +120,11 @@ public class AuthController {
                         Role adminRole = roleRepository.findByName(ERole.ROLE_ADMIN)
                                 .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
                         roles.add(adminRole);
-
                         break;
                     case "mod":
                         Role modRole = roleRepository.findByName(ERole.ROLE_MODERATOR)
                                 .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
                         roles.add(modRole);
-
                         break;
                     default:
                         Role userRole = roleRepository.findByName(ERole.ROLE_USER)
@@ -130,15 +134,14 @@ public class AuthController {
             });
         }
 
-        users.setRoles(roles);
-        userRepository.save(users);
+        user.setRoles(roles);
+        userRepository.save(user);
 
-        return ResponseEntity.ok("L'utilisateur est enrengistrer avec succès");
-        }
+        return ResponseEntity.ok("L'utilisateur est enregistré avec succès");
     }
 
-    //////////////////////////////////
 
+	
     @GetMapping("/users")
     public ResponseEntity<List<User>> getAllUsers(@RequestParam(required = false) String username) {
         try {
@@ -176,6 +179,17 @@ public class AuthController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
+    
+    @GetMapping("/userByName/{username}")
+    public ResponseEntity<User> getUsersByUsername(@PathVariable("username") String username) {
+        Optional<User> usersData = userRepository.findByUsername(username);
+
+        if (usersData.isPresent()) {
+            return new ResponseEntity<>(usersData.get(), HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
 
 
     //////////////////////////
@@ -193,6 +207,37 @@ public class AuthController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
+    
+    @PutMapping("/editPassword/{id}")
+    public ResponseEntity<User> updatePassword(@PathVariable("id") long id, @RequestBody PasswordRequest passwordRequest) {
+        Optional<User> userData = userRepository.findById(id);
+
+        if (userData.isPresent()) {
+            User _user = userData.get();
+           if(passwordRequest.getConfirmation().equals(passwordRequest.getNewPassword()) &&
+        		   encoder.matches(passwordRequest.getPassword(), _user.getPassword())) {
+        	   _user.setPassword(encoder.encode(passwordRequest.getNewPassword()));
+            return new ResponseEntity<>(userRepository.save(_user), HttpStatus.OK);}
+           else {
+        	   if(!passwordRequest.getConfirmation().equals(passwordRequest.getNewPassword()) &&
+        		   encoder.matches(passwordRequest.getPassword(), _user.getPassword())) {
+        		   throw new ResponseStatusException(HttpStatus.CONFLICT, "Mot de passe et confirmation differents !!!");
+        	   }
+        	   if(passwordRequest.getConfirmation().equals(passwordRequest.getNewPassword()) &&
+            		   !encoder.matches(passwordRequest.getPassword(), _user.getPassword())) {
+            		   throw new ResponseStatusException(HttpStatus.CONFLICT, "L'ancien mot de passe incorrect !!!");
+            	   }
+        	   if(!passwordRequest.getConfirmation().equals(passwordRequest.getNewPassword()) &&
+            		   !encoder.matches(passwordRequest.getPassword(), _user.getPassword())) {
+        		   throw new ResponseStatusException(HttpStatus.CONFLICT, "L'ancien mot de passe incorrect et nouveau Mot de passe  different de la confirmation !!!");
+        	   }
+        	   return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        	   }
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
 
     @DeleteMapping("/users/{id}")
     @ApiOperation(value = "Delete Project")
@@ -205,6 +250,71 @@ public class AuthController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+    
+    
+    @GetMapping("/search")
+    public ResponseEntity<Page<User>> search(
+            @RequestParam String keyword,
+            @RequestParam int page,
+            @RequestParam int size
+    ) {
+        Page<User> users = userService.searchUsers(keyword, page, size);
+        return ResponseEntity.ok(users);
+    }
+    
+    @PostMapping("/{userId}/roles")
+    public ResponseEntity<?> addRoleToUser(@PathVariable Long userId, @RequestParam ERole roleName) {
+        Optional<User> optionalUser = userService.getUser(userId);
+        if (!optionalUser.isPresent()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found");
+        }
+
+        Optional<Role> optionalRole = roleRepository.findByName(roleName);
+        if (!optionalRole.isPresent()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Role not found");
+        }
+
+        User user = optionalUser.get();
+        Role role = optionalRole.get();
+
+        user.getRoles().add(role);
+        userService.saveUser(user);
+
+        return ResponseEntity.ok(user);
+    }
+    
+    
+    @DeleteMapping("/{userId}/roles")
+    public ResponseEntity<?> removeRoleFromUser(@PathVariable Long userId, @RequestParam ERole roleName) {
+        Optional<User> optionalUser = userService.getUser(userId);
+        if (!optionalUser.isPresent()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found");
+        }
+
+        User user = optionalUser.get();
+
+        // Recherche du rôle dans les rôles de l'utilisateur
+        Optional<Role> optionalRole = user.getRoles().stream()
+                .filter(role -> role.getName() == roleName)
+                .findFirst();
+
+        if (!optionalRole.isPresent()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Role not found for this user");
+        }
+
+        Role role = optionalRole.get();
+
+        // Supprimer le rôle de la liste des rôles de l'utilisateur
+        user.getRoles().remove(role);
+
+        // Sauvegardez l'utilisateur mis à jour dans la base de données
+        userService.saveUser(user);
+
+        return ResponseEntity.ok(user);
+    }
+
+
+    
 /*
     @DeleteMapping("/userss/{usersId}/roles/{roleId}")
     public ResponseEntity<HttpStatus> deleteRoleFromUsers(@PathVariable(value = "usersId") Long usersId, @PathVariable(value = "roleId") Long roleId) throws ResourceNotFoundException {

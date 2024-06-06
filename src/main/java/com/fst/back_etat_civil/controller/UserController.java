@@ -18,15 +18,25 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.fst.back_etat_civil.model.ERole;
+import com.fst.back_etat_civil.model.Role;
 import com.fst.back_etat_civil.model.User;
+import com.fst.back_etat_civil.repository.RoleRepository;
 import com.fst.back_etat_civil.repository.UserRepository;
+import com.fst.back_etat_civil.service.UserService;
 
-@CrossOrigin(origins = "http://localhost:8080")
+@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/api/users")
 public class UserController {
     @Autowired
     UserRepository userRepository;
+    
+    @Autowired
+    RoleRepository roleRepository;
+    
+    @Autowired
+    UserService userService;
 
     @GetMapping("/users")
     public ResponseEntity<List<User>> getAllUsers(@RequestParam(required = false) String nom) {
@@ -104,5 +114,27 @@ public class UserController {
         }
 
     }
+    
+    @PostMapping("/{userId}/roles")
+    public ResponseEntity<?> addRoleToUser(@PathVariable Long userId, @RequestParam ERole roleName) {
+        Optional<User> optionalUser = userService.getUser(userId);
+        if (!optionalUser.isPresent()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found");
+        }
+
+        Optional<Role> optionalRole = roleRepository.findByName(roleName);
+        if (!optionalRole.isPresent()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Role not found");
+        }
+
+        User user = optionalUser.get();
+        Role role = optionalRole.get();
+
+        user.getRoles().add(role);
+        userService.saveUser(user);
+
+        return ResponseEntity.ok(user);
+    }
+
 
 }

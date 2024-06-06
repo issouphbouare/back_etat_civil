@@ -44,7 +44,7 @@ public class Citoyen {
 
     private String telephone;
     //@JsonIgnore
-    @ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+    @ManyToOne //(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
     @JoinColumn(name = "prof_id")
     private Profession profession;
 
@@ -63,7 +63,7 @@ public class Citoyen {
     private String prenomPere;
 
    //@JsonIgnore
-    @ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+    @ManyToOne //(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
     @JoinColumn(name = "profP_id")
     private Profession professionPere;
 
@@ -75,17 +75,17 @@ public class Citoyen {
     @Column( name = "prenom_mere")
     private String prenomMere;
     //@JsonIgnore
-    @ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+    @ManyToOne//(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
     @JoinColumn(name = "profM_id")
     private Profession professionMere;
 
     //@JsonIgnore
-    @ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+    @ManyToOne //(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
     @JoinColumn(name = "lieuNaissance_id")
     private Vqf lieuNaissance;
     
     //@JsonIgnore
-    @ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+    @ManyToOne //(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
     @JoinColumn(name = "adresse_id")
     private Vqf adresse;
     

@@ -73,7 +73,7 @@ public class ImageController {
         
         CitoyenDto citoyenDto= citoyenService.mapToDto(citoyen);
         citoyenDto.setPortrait(nouveauNom);
-        return citoyenService.updateCitoyen(citoyenDto.getId(), citoyenDto);
+        return citoyenService.updatePortrait(citoyenDto.getId(), citoyenDto);
     }
 
     private final Path imageStoragePath = Paths.get("E:/Projets/Etat civil/portraits");
