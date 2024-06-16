@@ -15,11 +15,21 @@ public interface RegionRepository extends JpaRepository<Region, Long> {
 	Boolean existsByCode(String code);
 	Boolean existsByNom(String code);
 
-@Query("SELECT a FROM Region a WHERE " +
-		   "CAST(a.id AS string) LIKE %:keyword% OR " +
-		   "a.nom LIKE %:keyword% OR " +
-		   "a.code LIKE %:keyword% OR " +
-		   "a.autre LIKE %:keyword%")
+	 @Query("SELECT a FROM Region a WHERE " +
+	           "(CAST(a.id AS string) LIKE %:keyword% OR " +
+	           "a.nom LIKE %:keyword% OR " +
+	           "a.code LIKE %:keyword% OR " +
+	           "a.autre LIKE %:keyword%) AND " +
+	           "a.nom <> 'Diaspora'")
  Page<Region> searchByKeywordInAllColumns(@Param("keyword") String keyword, Pageable pageable);
+	 
+	 @Query("SELECT a FROM Region a WHERE " +
+	           "(CAST(a.id AS string) LIKE %:keyword% OR " +
+	           "a.nom LIKE %:keyword% OR " +
+	           "a.code LIKE %:keyword% OR " +
+	           "a.autre LIKE %:keyword%) AND " +
+	           "a.nom = 'Diaspora'")
+Page<Region> searchByKeywordInAllColumnsDiapora(@Param("keyword") String keyword, Pageable pageable);
+
 
 }

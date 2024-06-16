@@ -20,11 +20,12 @@ Boolean existsByCode(String code);
 Boolean existsByNom(String code);
 
 @Query("SELECT a FROM Cercle a WHERE " +
-		   "CAST(a.id AS string) LIKE %:keyword% OR " +
+		   "(CAST(a.id AS string) LIKE %:keyword% OR " +
 		   "a.nom LIKE %:keyword% OR " +
 		   "a.code LIKE %:keyword% OR " +
 		   "a.region.nom LIKE %:keyword% OR " +
-		   "a.autre LIKE %:keyword%")
+		   "a.autre LIKE %:keyword% ) AND "
+		   + "a.region.nom <> 'Diaspora'")
  Page<Cercle> searchByKeywordInAllColumns(@Param("keyword") String keyword, Pageable pageable);
 
 }

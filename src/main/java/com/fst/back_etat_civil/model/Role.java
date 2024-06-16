@@ -33,4 +33,13 @@ public class Role {
     @JsonIgnore
     private Set<User> users = new HashSet<>();
 
+
+	public Role(Integer id, ERole name) {
+		super();
+		this.id = id;
+		this.name = name;
+	}
+   
+   
+
 }

@@ -121,12 +121,12 @@ public class JasperController {
         parameters.put("dateNaissance", citoyen.getDateNaissance());
         
         parameters.put("region", region.getNom());
-        parameters.put("cercle", cercle.getNom());
+        parameters.put("cercle", (region.getNom().equals("Diaspora"))?commune.getNom():cercle.getNom());
         parameters.put("commune", commune.getNom());
         parameters.put("adresse", adresse.getNom());
         
-        parameters.put("regionA", regionA.getNom());
-        parameters.put("cercleA", cercleA.getNom());
+        parameters.put("regionA", (regionA.getNom().equals("Diaspora"))?communeA.getNom():regionA.getNom());
+        parameters.put("cercleA", (regionA.getNom().equals("Diaspora"))?communeA.getNom():cercleA.getNom());
         parameters.put("communeA", communeA.getNom());
         parameters.put("lieuNaissance", lieu.getNom());
         parameters.put("profession", profession.getLibelle());
@@ -172,18 +172,18 @@ public class JasperController {
         parameters.put("prenomMere", citoyen.getPrenomMere());
         parameters.put("dateNaissance", citoyen.getDateNaissance());
         
-        parameters.put("region", region.getNom());
-        parameters.put("cercle", cercle.getNom());
-        parameters.put("commune", commune.getNom());
-        parameters.put("adresse", adresse.getNom());
+        parameters.put("region", !(region.getNom().equals("Diaspora"))? "Region : "+region.getNom() : "");
+        parameters.put("cercle", (region.getNom().equals("Diaspora"))? "Continent : "+cercle.getNom() : "Cercle : "+cercle.getNom());
+        parameters.put("commune", (region.getNom().equals("Diaspora"))? "Payes : "+commune.getNom() : "Commune : "+commune.getNom());
+        parameters.put("adresse", (regionA.getNom().equals("Diaspora"))? "Ville : "+adresse.getNom() :"VQF : "+adresse.getNom());
         parameters.put("rue", citoyen.getRue());
         parameters.put("porte", citoyen.getPorte());
         parameters.put("autre", citoyen.getAutre());
         
-        parameters.put("regionA", regionA.getNom());
-        parameters.put("cercleA", cercleA.getNom());
-        parameters.put("communeA", communeA.getNom());
-        parameters.put("lieuNaissance", lieu.getNom());
+        parameters.put("regionA", !(regionA.getNom().equals("Diaspora"))? "Region : "+regionA.getNom() : "");
+        parameters.put("cercleA", (regionA.getNom().equals("Diaspora"))? "Continent : "+cercleA.getNom() : "Cercle : "+cercleA.getNom());
+        parameters.put("communeA", (regionA.getNom().equals("Diaspora"))? "Payes : "+communeA.getNom() : "Commune : "+communeA.getNom());
+        parameters.put("lieuNaissance", (region.getNom().equals("Diaspora"))? "Ville : "+lieu.getNom() : "VQF : "+lieu.getNom());
         parameters.put("profession", profession.getLibelle());
         parameters.put("professionPere", professionPere.getLibelle());
         parameters.put("professionMere", professionMere.getLibelle());

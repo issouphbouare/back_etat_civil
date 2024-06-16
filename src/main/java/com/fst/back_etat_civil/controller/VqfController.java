@@ -60,6 +60,17 @@ public class VqfController {
         return new ResponseEntity<>(createdVqf, HttpStatus.CREATED);
         }
     }
+    
+    @PostMapping("/ville")
+    public ResponseEntity<VqfDto> createVille(@RequestBody VqfDto vqfDto) {
+    	if (vqfRepository.existsByNom(vqfDto.getNom())) {
+            throw new ResponseStatusException(HttpStatus.CONFLICT,"Ce nom de Ville existe déjà");
+        }
+    	else {
+        VqfDto createdVqf = vqfService.createVille(vqfDto);
+        return new ResponseEntity<>(createdVqf, HttpStatus.CREATED);
+        }
+    }
 
     @PutMapping("/{id}")
     public ResponseEntity<VqfDto> updateVqf(@PathVariable Long id, @RequestBody VqfDto vqfDto) {
@@ -86,6 +97,16 @@ public class VqfController {
             @RequestParam int size
     ) {
         Page<Vqf> vqfs = vqfService.searchVqfs(keyword, page, size);
+        return ResponseEntity.ok(vqfs);
+    }
+    
+    @GetMapping("/searchVille")
+    public ResponseEntity<Page<Vqf>> searchV(
+            @RequestParam String keyword,
+            @RequestParam int page,
+            @RequestParam int size
+    ) {
+        Page<Vqf> vqfs = vqfService.searchVilles(keyword, page, size);
         return ResponseEntity.ok(vqfs);
     }
 }

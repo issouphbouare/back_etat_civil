@@ -27,6 +27,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
+import com.fst.back_etat_civil.dto.VqfDto;
 import com.fst.back_etat_civil.model.ERole;
 import com.fst.back_etat_civil.model.Region;
 import com.fst.back_etat_civil.model.Role;
@@ -313,6 +314,16 @@ public class AuthController {
         return ResponseEntity.ok(user);
     }
 
+    
+    @PostMapping("/addRole")
+    public ResponseEntity<Role> createRole(@RequestParam ERole eRole) {
+    	
+        Role role = new Role();
+        role.setName(eRole);
+        roleRepository.save(role);
+        return new ResponseEntity<>(role, HttpStatus.CREATED);
+        
+    }
 
     
 /*

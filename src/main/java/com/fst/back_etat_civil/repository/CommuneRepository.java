@@ -20,12 +20,23 @@ public interface CommuneRepository extends JpaRepository<Commune, Long> {
 	Boolean existsByNom(String code);
 	
 	@Query("SELECT a FROM Commune a WHERE " +
-			   "CAST(a.id AS string) LIKE %:keyword% OR " +
+			   "( CAST(a.id AS string) LIKE %:keyword% OR " +
 			   "a.nom LIKE %:keyword% OR " +
 			   "a.code LIKE %:keyword% OR " +
 			   "a.cercle.nom LIKE %:keyword% OR " +
 			   "a.cercle.region.nom LIKE %:keyword% OR " +
-			   "a.autre LIKE %:keyword%")
+			   "a.autre LIKE %:keyword% ) AND " +
+            "a.cercle.region.nom <> 'Diaspora'")
 	    Page<Commune> searchByKeywordInAllColumns(@Param("keyword") String keyword, Pageable pageable);
+	
+	@Query("SELECT a FROM Commune a WHERE " +
+			   "( CAST(a.id AS string) LIKE %:keyword% OR " +
+			   "a.nom LIKE %:keyword% OR " +
+			   "a.code LIKE %:keyword% OR " +
+			   "a.cercle.nom LIKE %:keyword% OR " +
+			   "a.cercle.region.nom LIKE %:keyword% OR " +
+			   "a.autre LIKE %:keyword% ) AND " +
+               "a.cercle.region.nom = 'Diaspora'")
+	    Page<Commune> searchByKeywordInAllColumnsPayes(@Param("keyword") String keyword, Pageable pageable);
 
 }

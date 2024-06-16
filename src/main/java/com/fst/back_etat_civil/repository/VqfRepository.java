@@ -21,14 +21,23 @@ public interface VqfRepository extends JpaRepository<Vqf,Long> {
 	Boolean existsByNom(String code);
 	
 	@Query("SELECT a FROM Vqf a WHERE " +
-			   "CAST(a.id AS string) LIKE %:keyword% OR " +
+			   "(CAST(a.id AS string) LIKE %:keyword% OR " +
 			   "a.nom LIKE %:keyword% OR " +
 			   "a.code LIKE %:keyword% OR " +
 			   "a.commune.nom LIKE %:keyword% OR " +
 			   "a.commune.cercle.nom LIKE %:keyword% OR " +
 			   "a.commune.cercle.region.nom LIKE %:keyword% OR " +
-			   "a.autre LIKE %:keyword%")
+			   "a.autre LIKE %:keyword%) AND a.commune.cercle.region.nom <> 'Diaspora' ")
 	    Page<Vqf> searchByKeywordInAllColumns(@Param("keyword") String keyword, Pageable pageable);
 
+	@Query("SELECT a FROM Vqf a WHERE " +
+			   "(CAST(a.id AS string) LIKE %:keyword% OR " +
+			   "a.nom LIKE %:keyword% OR " +
+			   "a.code LIKE %:keyword% OR " +
+			   "a.commune.nom LIKE %:keyword% OR " +
+			   "a.commune.cercle.nom LIKE %:keyword% OR " +
+			   "a.commune.cercle.region.nom LIKE %:keyword% OR " +
+			   "a.autre LIKE %:keyword%) AND a.commune.cercle.region.nom = 'Diaspora' ")
+	    Page<Vqf> searchByKeywordInAllColumnsVille(@Param("keyword") String keyword, Pageable pageable);
 
 }

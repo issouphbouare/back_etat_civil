@@ -47,7 +47,7 @@ public class ImageController {
                            ) throws JsonProcessingException {
 
     	Citoyen citoyen = citoyenRepository.findByNiciv(id);
-        String repertoireDoc = "E:/Projets/Etat civil/portraits"; // Remplacez par le chemin souhaité pour le répertoire "images"
+        String repertoireDoc = "portraits"; // Remplacez par le chemin souhaité pour le répertoire "images"
         File repertoire = new File(repertoireDoc);
         if (!repertoire.exists()) {
             boolean repertoireCree = repertoire.mkdirs();
@@ -76,7 +76,7 @@ public class ImageController {
         return citoyenService.updatePortrait(citoyenDto.getId(), citoyenDto);
     }
 
-    private final Path imageStoragePath = Paths.get("E:/Projets/Etat civil/portraits");
+    private final Path imageStoragePath = Paths.get("portraits");
 
     @GetMapping("affichePortrait/{filename}")
     public ResponseEntity<Resource> getImage(@PathVariable String filename) {

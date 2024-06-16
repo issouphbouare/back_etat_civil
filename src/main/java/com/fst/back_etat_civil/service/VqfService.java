@@ -119,6 +119,14 @@ public class VqfService {
         vqf = vqfRepository.save(vqf);
         return mapToDto(vqf);
     }
+    
+    public VqfDto createVille(VqfDto vqfDto) {
+        Vqf vqf = mapToModel(vqfDto);
+        vqf.setCommune(communeRepository.findById(vqfDto.getCommune()).get());
+        vqf.setCode(GeneCode(communeRepository.findById(vqfDto.getCommune()).get()));
+        vqf = vqfRepository.save(vqf);
+        return mapToDto(vqf);
+    }
 
     public VqfDto updateVqf(long id, VqfDto vqfDto) {
         Optional<Vqf> vqfData = vqfRepository.findById(id);
@@ -182,6 +190,21 @@ public class VqfService {
     	Sort sort = Sort.by(Sort.Direction.ASC, "code");
         Pageable pageable = PageRequest.of(page, size, sort);
         return vqfRepository.searchByKeywordInAllColumns(searchTerm, pageable);
+    }
+    
+    public Page<Vqf> searchVilles(String searchTerm, int page, int size) {
+    	Sort sort = Sort.by(Sort.Direction.ASC, "code");
+        Pageable pageable = PageRequest.of(page, size, sort);
+        return vqfRepository.searchByKeywordInAllColumnsVille(searchTerm, pageable);
+    }
+    
+    
+    public String GeneCode(Commune commune) {
+    	List<Vqf>  vqfs=vqfRepository.findByCommune(commune);
+    	long seq=1;
+    	for (Vqf v : vqfs) seq++;
+			
+		return commune.getCode()+String.valueOf(String.format("%02d",seq));
     }
 
 }

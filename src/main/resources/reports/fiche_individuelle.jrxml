@@ -67,57 +67,29 @@
 				<reportElement x="487" y="76" width="57" height="58" uuid="2790cbcf-8a51-47bd-b8ab-e9c8c29d75d8"/>
 				<imageExpression><![CDATA["reports/armoirie.jpg"]]></imageExpression>
 			</image>
-			<staticText>
-				<reportElement x="-5" y="76" width="95" height="24" uuid="ff5a5ab1-74d1-493f-974e-50b37708462f"/>
-				<textElement textAlignment="Left" verticalAlignment="Middle">
-					<font size="11" isBold="true"/>
-				</textElement>
-				<text><![CDATA[Region : ]]></text>
-			</staticText>
 			<textField>
-				<reportElement x="90" y="76" width="120" height="24" uuid="23024ec7-57ad-4779-beea-e0bcf3754d11"/>
+				<reportElement x="-6" y="76" width="216" height="24" uuid="23024ec7-57ad-4779-beea-e0bcf3754d11"/>
 				<textElement verticalAlignment="Middle">
 					<font size="11" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{regionA}]]></textFieldExpression>
 			</textField>
-			<staticText>
-				<reportElement x="-6" y="100" width="96" height="20" uuid="f9558cce-4ac2-4356-866a-8f0612df676a"/>
-				<textElement textAlignment="Left" verticalAlignment="Middle">
-					<font size="11" isBold="true"/>
-				</textElement>
-				<text><![CDATA[Commune : ]]></text>
-			</staticText>
 			<textField>
-				<reportElement x="90" y="100" width="120" height="20" uuid="8814dabe-bc5e-468c-9cf8-73db5b32986b"/>
+				<reportElement x="-6" y="100" width="216" height="20" uuid="8814dabe-bc5e-468c-9cf8-73db5b32986b"/>
 				<textElement verticalAlignment="Middle">
 					<font size="11" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{communeA}]]></textFieldExpression>
 			</textField>
-			<staticText>
-				<reportElement x="210" y="100" width="60" height="20" uuid="165551c1-1bdb-48d2-8ad7-8a1a0eda6072"/>
-				<textElement textAlignment="Left" verticalAlignment="Middle">
-					<font size="11" isBold="true"/>
-				</textElement>
-				<text><![CDATA[VQF : ]]></text>
-			</staticText>
 			<textField>
-				<reportElement x="270" y="100" width="140" height="20" uuid="aa5659f7-68ad-4ef7-85c1-c4037c4325e8"/>
+				<reportElement x="210" y="100" width="200" height="20" uuid="aa5659f7-68ad-4ef7-85c1-c4037c4325e8"/>
 				<textElement verticalAlignment="Middle">
 					<font size="11" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{adresse}]]></textFieldExpression>
 			</textField>
-			<staticText>
-				<reportElement x="210" y="76" width="60" height="24" uuid="718b6d37-beab-4085-af09-01f5a70a9d97"/>
-				<textElement textAlignment="Left" verticalAlignment="Middle">
-					<font size="11" isBold="true"/>
-				</textElement>
-				<text><![CDATA[Cercle : ]]></text>
-			</staticText>
 			<textField>
-				<reportElement x="270" y="76" width="140" height="24" uuid="1ddb2012-6483-4cb2-8fe0-cc5745f92bae"/>
+				<reportElement x="210" y="76" width="200" height="24" uuid="1ddb2012-6483-4cb2-8fe0-cc5745f92bae"/>
 				<textElement verticalAlignment="Middle">
 					<font size="11" isBold="true"/>
 				</textElement>
@@ -377,61 +349,33 @@
 				</textElement>
 				<text><![CDATA[information naissance]]></text>
 			</staticText>
-			<staticText>
-				<reportElement x="0" y="316" width="65" height="14" uuid="869d2f42-1d65-43a6-9c97-49a89a90f54b"/>
-				<textElement textAlignment="Left">
-					<font size="11" isBold="true"/>
-				</textElement>
-				<text><![CDATA[Region : ]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="0" y="330" width="65" height="20" uuid="a7ad3b00-3c6f-47af-b770-71329866437d"/>
-				<textElement textAlignment="Left" verticalAlignment="Top">
-					<font size="11" isBold="true"/>
-				</textElement>
-				<text><![CDATA[Commune : ]]></text>
-			</staticText>
 			<textField>
-				<reportElement x="65" y="316" width="105" height="14" uuid="333ec829-a743-4950-979c-0d76ee69cc7d"/>
+				<reportElement x="1" y="316" width="169" height="14" uuid="333ec829-a743-4950-979c-0d76ee69cc7d"/>
 				<textElement>
 					<font size="11" isBold="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$P{regionA}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$P{region}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="65" y="330" width="105" height="20" uuid="0165d3ce-779a-43e1-8359-ce07e825644e"/>
+				<reportElement x="1" y="330" width="169" height="20" uuid="0165d3ce-779a-43e1-8359-ce07e825644e"/>
 				<textElement verticalAlignment="Top">
 					<font size="11" isBold="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$P{communeA}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$P{commune}]]></textFieldExpression>
 			</textField>
-			<staticText>
-				<reportElement x="170" y="316" width="45" height="14" uuid="deb58fd5-4c49-4445-b77d-e20dc3fe9482"/>
-				<textElement textAlignment="Left">
-					<font size="11" isBold="true"/>
-				</textElement>
-				<text><![CDATA[Cercle : ]]></text>
-			</staticText>
 			<textField>
-				<reportElement x="215" y="316" width="111" height="14" uuid="ac10a6e1-ee00-4694-a572-9b6d37ae5f3c"/>
+				<reportElement x="170" y="316" width="156" height="14" uuid="ac10a6e1-ee00-4694-a572-9b6d37ae5f3c"/>
 				<textElement>
 					<font size="11" isBold="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$P{cercleA}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$P{cercle}]]></textFieldExpression>
 			</textField>
-			<staticText>
-				<reportElement x="170" y="330" width="45" height="20" uuid="a910aa19-b778-435c-9de1-05500650da57"/>
-				<textElement textAlignment="Left" verticalAlignment="Top">
-					<font size="11" isBold="true"/>
-				</textElement>
-				<text><![CDATA[VQF : ]]></text>
-			</staticText>
 			<textField>
-				<reportElement x="215" y="330" width="111" height="20" uuid="0b32904f-201b-416f-bf4e-69f01b4d37dd"/>
+				<reportElement x="170" y="330" width="156" height="20" uuid="0b32904f-201b-416f-bf4e-69f01b4d37dd"/>
 				<textElement verticalAlignment="Top">
 					<font size="11" isBold="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$P{adresse}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$P{lieuNaissance}]]></textFieldExpression>
 			</textField>
 			<staticText>
 				<reportElement x="120" y="275" width="70" height="15" uuid="42f61487-e37a-4b39-bef4-51a6e093417a"/>

@@ -33,7 +33,9 @@ public class RegionController {
     private RegionRepository regionRepository;
 
 
-    @GetMapping
+    
+
+	@GetMapping
     public ResponseEntity<List<RegionDto>> getAllRegions() {
         List<RegionDto> regions = regionService.getAllRegions();
         return new ResponseEntity<>(regions, HttpStatus.OK);

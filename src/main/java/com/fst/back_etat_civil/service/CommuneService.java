@@ -184,4 +184,11 @@ public class CommuneService {
         Pageable pageable = PageRequest.of(page, size, sort);
         return communeRepository.searchByKeywordInAllColumns(searchTerm, pageable);
     }
+    
+    public Page<Commune> searchPayes(String searchTerm, int page, int size) {
+    	Sort sort = Sort.by(Sort.Direction.ASC, "code");
+        Pageable pageable = PageRequest.of(page, size, sort);
+        return communeRepository.searchByKeywordInAllColumnsPayes(searchTerm, pageable);
+    }
+
 }

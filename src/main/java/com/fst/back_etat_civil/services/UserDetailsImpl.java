@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.springframework.security.core.GrantedAuthority;
@@ -12,6 +13,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fst.back_etat_civil.model.Role;
 import com.fst.back_etat_civil.model.User;
 
 import lombok.Data;
@@ -40,7 +42,11 @@ public class UserDetailsImpl implements UserDetails {
         this.authorities = authorities;
     }
 
-    public static UserDetailsImpl build(User user) {
+    public UserDetailsImpl(Long id2, String username2, String email2, String password2, Set<Role> roles) {
+		// TODO Auto-generated constructor stub
+	}
+
+	public static UserDetailsImpl build(User user) {
         List<GrantedAuthority> authorities = new ArrayList<>();
                 user.getRoles().stream()
                 .map(role -> new SimpleGrantedAuthority(role.getName().name()))

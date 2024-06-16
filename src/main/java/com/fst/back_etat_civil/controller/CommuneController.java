@@ -22,6 +22,7 @@ import org.springframework.web.server.ResponseStatusException;
 import com.fst.back_etat_civil.dto.CercleDto;
 import com.fst.back_etat_civil.dto.CommuneDto;
 import com.fst.back_etat_civil.model.Cercle;
+import com.fst.back_etat_civil.model.Citoyen;
 import com.fst.back_etat_civil.model.Commune;
 import com.fst.back_etat_civil.model.Vqf;
 import com.fst.back_etat_civil.repository.CercleRepository;
@@ -88,6 +89,36 @@ public class CommuneController {
         } catch (NullPointerException e) {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
+       }
+    }
+    
+    @PostMapping("/payes")
+    public ResponseEntity<CommuneDto> createPayes(@RequestBody CommuneDto commune) {
+    	if (communeRepository.existsByNom(commune.getNom())) {
+            throw new ResponseStatusException(HttpStatus.CONFLICT,"Ce nom de payes existe déjà");
+        }
+    	else {
+        try {
+            Optional<Cercle> cercle=cercleRepository.findById(commune.getCercle());
+            Commune commune1= new Commune();
+            //MAPPING
+            commune1.setAutre(commune.getAutre());
+            commune1.setNom(commune.getNom());
+            commune1.setCode(GeneCode(cercle.get()));
+
+            commune1.setCercle(cercle.get());
+            //END MAPPING
+            if(!cercle.isPresent())
+                throw new ResponseStatusException(HttpStatus.NOT_FOUND,"CERCLE NOT FOUND");
+
+            Commune _commune = communeRepository
+                    .save(commune1);
+            commune.setId(_commune.getId());
+
+            return new ResponseEntity<>(commune, HttpStatus.CREATED);
+        } catch (NullPointerException e) {
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
         }
     }
 
@@ -117,5 +148,23 @@ public class CommuneController {
     ) {
         Page<Commune> communes = communeService.searchCommunes(keyword, page, size);
         return ResponseEntity.ok(communes);
+    }
+    
+    @GetMapping("/searchP")
+    public ResponseEntity<Page<Commune>> searchP(
+            @RequestParam String keyword,
+            @RequestParam int page,
+            @RequestParam int size
+    ) {
+        Page<Commune> communes = communeService.searchPayes(keyword, page, size);
+        return ResponseEntity.ok(communes);
+    }
+    
+    public String GeneCode(Cercle cercle) {
+    	List<Commune>  communes=communeRepository.findByCercle(cercle);
+    	long seq=1;
+    	for (Commune c : communes) seq++;
+			
+		return cercle.getCode()+String.valueOf(String.format("%02d",seq));
     }
 }
