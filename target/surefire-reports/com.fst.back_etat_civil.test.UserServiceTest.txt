@@ -1,4 +1,4 @@
 -------------------------------------------------------------------------------
 Test set: com.fst.back_etat_civil.test.UserServiceTest
 -------------------------------------------------------------------------------
-Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0 s - in com.fst.back_etat_civil.test.UserServiceTest
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.356 s - in com.fst.back_etat_civil.test.UserServiceTest
