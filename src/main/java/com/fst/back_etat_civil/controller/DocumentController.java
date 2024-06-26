@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.fst.back_etat_civil.model.Document;
 import com.fst.back_etat_civil.repository.DocumentRepository;
 
-@CrossOrigin(origins = "http://localhost:8080")
+@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/api/document")
 public class DocumentController {
