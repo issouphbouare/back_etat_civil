@@ -41,13 +41,15 @@ public class ImageController {
     private CitoyenService citoyenService;
 	@Autowired
     private CitoyenRepository citoyenRepository;
+	
+	String repertoireDoc = "E:/Projets/Etat civil/portraits"; // Remplacez par le chemin souhaité pour le répertoire "images"
     
     @RequestMapping(value = "/uploadPortrait/{id}", method = RequestMethod.PUT, headers = "accept=Application/json")
     public CitoyenDto ajouter(@RequestParam("file") MultipartFile file, @PathVariable String id
                            ) throws JsonProcessingException {
 
     	Citoyen citoyen = citoyenRepository.findByNiciv(id);
-        String repertoireDoc = "portraits"; // Remplacez par le chemin souhaité pour le répertoire "images"
+        
         File repertoire = new File(repertoireDoc);
         if (!repertoire.exists()) {
             boolean repertoireCree = repertoire.mkdirs();
@@ -76,7 +78,7 @@ public class ImageController {
         return citoyenService.updatePortrait(citoyenDto.getId(), citoyenDto);
     }
 
-    private final Path imageStoragePath = Paths.get("portraits");
+    private final Path imageStoragePath = Paths.get(repertoireDoc);
 
     @GetMapping("affichePortrait/{filename}")
     public ResponseEntity<Resource> getImage(@PathVariable String filename) {
