@@ -42,7 +42,13 @@ public class ImageController {
 	@Autowired
     private CitoyenRepository citoyenRepository;
 	
-	String repertoireDoc = "E:/Projets/Etat civil/portraits"; // Remplacez par le chemin souhaité pour le répertoire "images"
+	
+	//String userHome = System.getProperty("user.home"); // Obtient le répertoire utilisateur
+    //String desktopPath = userHome + File.separator + "Desktop"; // Chemin vers le bureau
+
+   
+	
+	String repertoireDoc ="/portraits"; // Remplacez par le chemin souhaité pour le répertoire "images"
     
     @RequestMapping(value = "/uploadPortrait/{id}", method = RequestMethod.PUT, headers = "accept=Application/json")
     public CitoyenDto ajouter(@RequestParam("file") MultipartFile file, @PathVariable String id
