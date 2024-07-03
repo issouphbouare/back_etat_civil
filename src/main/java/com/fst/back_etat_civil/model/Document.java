@@ -30,17 +30,11 @@ public class Document {
     @Column( name = "type")
     private String type;
 
-    @NotNull
-    @Column(name = "date")
+    @Temporal(TemporalType.DATE)
+    @Column(name = "date", columnDefinition = "DATE DEFAULT CURRENT_DATE", insertable = false, updatable = false)
     private Date date;
+    
+    @ManyToOne //(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+	private Citoyen citoyen;
 
-    @Override
-    public String toString() {
-        return "Document{" +
-                "id=" + id +
-                ", nom='" + nom + '\'' +
-                ", type='" + type + '\'' +
-                ", date=" + date +
-                '}';
-    }
 }
