@@ -200,5 +200,56 @@ public class JasperController {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Erreur lors de la génération de la fiche", e);
         }
     }
+    
+    @GetMapping("/nationalite/{id}")
+    public ResponseEntity<byte[]> generateNationalite(@PathVariable Long id) throws IOException {
+        // Récupérer les détails du citoyen
+        CitoyenDto citoyen = citoyenService.getCitoyenById(id);
+        VqfDto adresse = vqfService.getVqfById(citoyen.getAdresse());
+        VqfDto lieu = vqfService.getVqfById(citoyen.getLieuNaissance());
+        CommuneDto communeA = communeService.getCommuneById(adresse.getCommune());
+        CommuneDto commune = communeService.getCommuneById(lieu.getCommune());
+        CercleDto cercleA = cercleService.getCercleById(communeA.getCercle());
+        CercleDto cercle = cercleService.getCercleById(commune.getCercle());
+        RegionDto regionA = regionService.getRegionById(cercleA.getRegion());
+        RegionDto region = regionService.getRegionById(cercle.getRegion());
+        ProfessionDto profession = professionService.getProfessionById(citoyen.getProfession());
+        
+
+        // Créer des paramètres pour le rapport JasperReports
+        Map<String, Object> parameters = new HashMap<>();
+        parameters.put("id", citoyen.getId());
+        parameters.put("nom", citoyen.getNom());
+        parameters.put("prenom", citoyen.getPrenom());
+        parameters.put("niciv", citoyen.getNiciv());
+        parameters.put("telephone", citoyen.getTelephone());
+        parameters.put("civilite", citoyen.getCivilite());
+        parameters.put("prenomPere", citoyen.getPrenomPere());
+        parameters.put("nomMere", citoyen.getNomMere());
+        parameters.put("prenomMere", citoyen.getPrenomMere());
+        parameters.put("dateNaissance", citoyen.getDateNaissance());
+        parameters.put("profession", profession.getLibelle());
+        
+        parameters.put("region", region.getNom());
+        parameters.put("cercle", cercle.getNom());
+        parameters.put("commune", commune.getNom());
+        parameters.put("adresse", adresse.getNom());
+        
+        parameters.put("regionA", regionA.getNom());
+        parameters.put("cercleA", cercleA.getNom());
+        parameters.put("communeA", communeA.getNom());
+        parameters.put("lieuNaissance", lieu.getNom());
+        parameters.put("toDay", new Date());
+        
+        
+        // Ajoutez d'autres paramètres si nécessaire
+
+        // Générer le reçu
+        try {
+            return recuService.generateNationalite(parameters);
+        } catch (JRException e) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Erreur lors de la génération du nationalite", e);
+        }
+    }
 }
 

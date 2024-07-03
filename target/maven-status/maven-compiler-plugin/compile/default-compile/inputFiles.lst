@@ -33,6 +33,7 @@ E:\Projets\Java\back_etat_civil\src\main\java\com\fst\back_etat_civil\controller
 E:\Projets\Java\back_etat_civil\src\main\java\com\fst\back_etat_civil\model\Empreinte.java
 E:\Projets\Java\back_etat_civil\src\main\java\com\fst\back_etat_civil\dto\CommuneDto.java
 E:\Projets\Java\back_etat_civil\src\main\java\com\fst\back_etat_civil\security\jwt\JwtUtils.java
+E:\Projets\Java\back_etat_civil\src\main\java\com\fst\back_etat_civil\dto\DocumentDto.java
 E:\Projets\Java\back_etat_civil\src\main\java\com\fst\back_etat_civil\exception\ResourceNotFoundException.java
 E:\Projets\Java\back_etat_civil\src\main\java\com\fst\back_etat_civil\service\JasperService.java
 E:\Projets\Java\back_etat_civil\src\main\java\com\fst\back_etat_civil\controller\CercleController.java

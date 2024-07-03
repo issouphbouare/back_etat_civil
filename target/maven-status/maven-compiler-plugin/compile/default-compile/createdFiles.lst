@@ -46,6 +46,7 @@ com\fst\back_etat_civil\repository\EmpreinteRepository.class
 com\fst\back_etat_civil\controller\ProfessionController.class
 com\fst\back_etat_civil\model\Citoyen.class
 com\fst\back_etat_civil\BackEtatCivilApplication.class
+com\fst\back_etat_civil\dto\DocumentDto.class
 com\fst\back_etat_civil\services\NumeroUniqueService.class
 com\fst\back_etat_civil\security\jwt\JwtUtils.class
 com\fst\back_etat_civil\service\JasperService.class
