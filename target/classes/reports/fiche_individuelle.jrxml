@@ -110,28 +110,28 @@
 				<text><![CDATA[N° Niciv : ]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="40" y="150" width="170" height="20" uuid="06a61317-5cda-4648-b900-c5ac74d5aaae"/>
+				<reportElement x="40" y="150" width="150" height="20" uuid="06a61317-5cda-4648-b900-c5ac74d5aaae"/>
 				<textElement verticalAlignment="Middle">
 					<font size="11" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{niciv}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="280" y="150" width="150" height="20" uuid="e9b6e463-9e9c-4630-8853-d3929821fca1"/>
+				<reportElement x="250" y="150" width="180" height="20" uuid="e9b6e463-9e9c-4630-8853-d3929821fca1"/>
 				<textElement verticalAlignment="Middle">
 					<font size="11" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{id}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="230" y="150" width="50" height="20" uuid="7e93e623-d343-414b-ba37-a15573c19b36"/>
+				<reportElement x="190" y="150" width="60" height="20" uuid="7e93e623-d343-414b-ba37-a15573c19b36"/>
 				<textElement textAlignment="Left" verticalAlignment="Middle">
 					<font size="11" isBold="true"/>
 				</textElement>
 				<text><![CDATA[N° code : ]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="180" y="173" width="100" height="15" uuid="d0e9b14a-12fc-4f21-823c-706ba999189a"/>
+				<reportElement x="190" y="170" width="120" height="15" uuid="d0e9b14a-12fc-4f21-823c-706ba999189a"/>
 				<textElement textAlignment="Left">
 					<font size="11" isBold="true"/>
 				</textElement>
@@ -152,7 +152,7 @@
 				<text><![CDATA[Prenom : ]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="280" y="173" width="60" height="15" uuid="57862171-0950-41d8-a453-d10916107fc5"/>
+				<reportElement x="310" y="170" width="120" height="15" uuid="57862171-0950-41d8-a453-d10916107fc5"/>
 				<textElement textAlignment="Left">
 					<font size="11" isBold="true"/>
 				</textElement>
@@ -185,13 +185,6 @@
 					<font size="11" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{profession}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="120" y="173" width="60" height="27" uuid="d05832ca-37db-4bd4-b4f2-4447ff0e19bd"/>
-				<textElement>
-					<font size="12" isBold="true"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$P{sexe}]]></textFieldExpression>
 			</textField>
 			<rectangle>
 				<reportElement x="340" y="193" width="220" height="76" uuid="cdaf2430-fd19-4fa7-8339-7a72f377253a"/>
@@ -390,6 +383,13 @@
 					<font size="11" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{telephone}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="120" y="170" width="70" height="15" uuid="b8d02c64-9ee7-453e-a32c-e4a75d936cf6"/>
+				<textElement>
+					<font size="11" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{sexe}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>
