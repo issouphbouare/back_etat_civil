@@ -13,6 +13,7 @@
 	<parameter name="dateNaissance" class="java.util.Date"/>
 	<parameter name="region" class="java.lang.String"/>
 	<parameter name="cercle" class="java.lang.String"/>
+	<parameter name="profession" class="java.lang.String"/>
 	<parameter name="commune" class="java.lang.String"/>
 	<parameter name="adresse" class="java.lang.String"/>
 	<parameter name="regionA" class="java.lang.String"/>
