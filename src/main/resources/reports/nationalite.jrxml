@@ -72,14 +72,14 @@
 				<text><![CDATA[LE PRESIDENT DU TRIBUNAL DE GRANDE INSTANCE CERTIFIE QUE LA PERSONNE DENOMMEE CI-APRES]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="70" y="-100" width="180" height="30" uuid="8b7197b6-c9ea-4447-ab2c-6c9e7440743c"/>
+				<reportElement x="80" y="-100" width="170" height="30" uuid="8b7197b6-c9ea-4447-ab2c-6c9e7440743c"/>
 				<textElement textAlignment="Left">
 					<font size="10" isBold="true" isItalic="false"/>
 				</textElement>
 				<text><![CDATA[TRIBUNAL DE GRANDE INSTANCE]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="70" y="-120" width="180" height="20" uuid="cf282249-204c-4f5c-8d2d-c1d25e3f32cc"/>
+				<reportElement x="80" y="-120" width="170" height="20" uuid="cf282249-204c-4f5c-8d2d-c1d25e3f32cc"/>
 				<textElement textAlignment="Left">
 					<font size="12" isBold="true" isItalic="false"/>
 				</textElement>

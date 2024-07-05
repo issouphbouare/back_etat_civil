@@ -46,7 +46,7 @@ public class JasperController {
     @GetMapping("/recu/{id}")
     public ResponseEntity<byte[]> generateRecu(@PathVariable Long id) throws IOException {
         // Récupérer les détails du citoyen
-        CitoyenDto citoyen = citoyenService.getCitoyenById(id);
+    	CitoyenDto citoyen = citoyenService.getCitoyenById(id);
         VqfDto adresse = vqfService.getVqfById(citoyen.getAdresse());
         VqfDto lieu = vqfService.getVqfById(citoyen.getLieuNaissance());
         CommuneDto communeA = communeService.getCommuneById(adresse.getCommune());
@@ -55,7 +55,7 @@ public class JasperController {
         CercleDto cercle = cercleService.getCercleById(commune.getCercle());
         RegionDto regionA = regionService.getRegionById(cercleA.getRegion());
         RegionDto region = regionService.getRegionById(cercle.getRegion());
-        
+        ProfessionDto profession = professionService.getProfessionById(citoyen.getProfession());
         
 
         // Créer des paramètres pour le rapport JasperReports
@@ -70,6 +70,7 @@ public class JasperController {
         parameters.put("nomMere", citoyen.getNomMere());
         parameters.put("prenomMere", citoyen.getPrenomMere());
         parameters.put("dateNaissance", citoyen.getDateNaissance());
+        parameters.put("profession", profession.getLibelle());
         
         parameters.put("region", region.getNom());
         parameters.put("cercle", cercle.getNom());
