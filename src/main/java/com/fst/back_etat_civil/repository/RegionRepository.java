@@ -13,7 +13,7 @@ import com.fst.back_etat_civil.model.Region;
 public interface RegionRepository extends JpaRepository<Region, Long> {
    // List<Region> findByNom(String nom);
 	Boolean existsByCode(String code);
-	Boolean existsByNom(String code);
+	Boolean existsByNomIgnoreCase(String code);
 
 	 @Query("SELECT a FROM Region a WHERE " +
 	           "(CAST(a.id AS string) LIKE %:keyword% OR " +

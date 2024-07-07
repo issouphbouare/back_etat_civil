@@ -94,7 +94,7 @@ public class CommuneController {
     
     @PostMapping("/payes")
     public ResponseEntity<CommuneDto> createPayes(@RequestBody CommuneDto commune) {
-    	if (communeRepository.existsByNom(commune.getNom())) {
+    	if (communeRepository.existsByNomIgnoreCase(commune.getNom())) {
             throw new ResponseStatusException(HttpStatus.CONFLICT,"Ce nom de payes existe déjà");
         }
     	else {

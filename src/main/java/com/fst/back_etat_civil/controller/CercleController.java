@@ -62,7 +62,7 @@ public class CercleController {
     	if (cercleRepository.existsByCode(cercle.getCode())) {
             throw new ResponseStatusException(HttpStatus.CONFLICT,"Ce code de cercle existe déjà");
         }
-    	if (cercleRepository.existsByNom(cercle.getNom())) {
+    	if (cercleRepository.existsByNomIgnoreCase(cercle.getNom())) {
             throw new ResponseStatusException(HttpStatus.CONFLICT,"Ce nom de cercle existe déjà");
         }else {
         try {
@@ -95,7 +95,7 @@ public class CercleController {
         		&& !cercleRepository.findById(id).get().getCode().equals(cercleDto.getCode())) {
                 throw new ResponseStatusException(HttpStatus.CONFLICT,"Ce code de cercle existe déjà");
             }
-        	if (cercleRepository.existsByNom(cercleDto.getNom())
+        	if (cercleRepository.existsByNomIgnoreCase(cercleDto.getNom())
         			&& !cercleRepository.findById(id).get().getNom().equals(cercleDto.getNom())) {
                 throw new ResponseStatusException(HttpStatus.CONFLICT,"Ce nom de cercle existe déjà");
             }else {

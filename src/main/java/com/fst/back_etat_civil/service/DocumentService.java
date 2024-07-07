@@ -35,8 +35,7 @@ public class DocumentService {
     @Autowired
     private CitoyenRepository citoyenRepository;
     
-    @Autowired
-    private JasperController jasperController;
+   
 
     public List<DocumentDto> getAllDocuments() {
         List<Document> documents = documentRepository.findAll();

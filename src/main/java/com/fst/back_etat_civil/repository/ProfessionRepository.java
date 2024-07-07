@@ -11,7 +11,7 @@ import com.fst.back_etat_civil.model.Profession;
 
 @Repository
 public interface ProfessionRepository extends JpaRepository<Profession, Long> {
-	Boolean existsByLibelle(String libelle);
+	Boolean existsByLibelleIgnoreCase(String libelle);
 	
 	@Query("SELECT a FROM Profession a WHERE " +
 			   "CAST(a.id AS string) LIKE %:keyword% OR " +

@@ -52,7 +52,7 @@ public class RegionController {
     	if (regionRepository.existsByCode(regionDto.getCode())) {
             throw new ResponseStatusException(HttpStatus.CONFLICT,"Ce code de region existe déjà");
         }
-    	if (regionRepository.existsByNom(regionDto.getNom())) {
+    	if (regionRepository.existsByNomIgnoreCase(regionDto.getNom())) {
             throw new ResponseStatusException(HttpStatus.CONFLICT,"Ce nom de region existe déjà");
         }else {
         RegionDto createdRegion = regionService.createRegion(regionDto);
@@ -66,7 +66,7 @@ public class RegionController {
     		&& !regionRepository.findById(id).get().getCode().equals(regionDto.getCode())) {
             throw new ResponseStatusException(HttpStatus.CONFLICT,"Ce code de region existe déjà");
         }
-    	if (regionRepository.existsByNom(regionDto.getNom())
+    	if (regionRepository.existsByNomIgnoreCase(regionDto.getNom())
     			&& !regionRepository.findById(id).get().getNom().equals(regionDto.getNom())) {
             throw new ResponseStatusException(HttpStatus.CONFLICT,"Ce nom de region existe déjà");
         }else {
