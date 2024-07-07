@@ -17,7 +17,8 @@ public interface CommuneRepository extends JpaRepository<Commune, Long> {
    // List<Commune> findByNom(String nom);
 	List<Commune> findByCercle(Cercle cercle);
 	Boolean existsByCode(String code);
-	Boolean existsByNom(String code);
+	Boolean existsByNomIgnoreCase(String code);
+	//Boolean existsByNom(String code);
 	
 	@Query("SELECT a FROM Commune a WHERE " +
 			   "( CAST(a.id AS string) LIKE %:keyword% OR " +

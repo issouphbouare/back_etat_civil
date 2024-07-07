@@ -146,8 +146,12 @@ public class CitoyenController {
 
     @PutMapping("/{id}")
     public ResponseEntity<CitoyenDto> updateCitoyen(@PathVariable long id, @RequestBody CitoyenDto citoyenDto) {
+    	if (citoyenDto.getTelephone()!=null && !citoyenDto.getTelephone().equals(citoyenRepository.findById(id).get().getTelephone())
+    			&& citoyenRepository.existsByTelephone(citoyenDto.getTelephone())) {
+            throw new ResponseStatusException(HttpStatus.CONFLICT,"Ce numero de telephone existe déjà");
+        }else {
         CitoyenDto updatedCitoyen = citoyenService.updateCitoyen(id, citoyenDto);
-        return new ResponseEntity<>(updatedCitoyen, HttpStatus.OK);
+        return new ResponseEntity<>(updatedCitoyen, HttpStatus.OK);}
     }
 
     @DeleteMapping("/{id}")

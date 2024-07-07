@@ -17,7 +17,7 @@ public interface CercleRepository extends JpaRepository<Cercle, Long> {
     //List<Cercle> findByNom(String nom);
 List<Cercle> findByRegion(Region region);
 Boolean existsByCode(String code);
-Boolean existsByNom(String code);
+Boolean existsByNomIgnoreCase(String code);
 
 @Query("SELECT a FROM Cercle a WHERE " +
 		   "(CAST(a.id AS string) LIKE %:keyword% OR " +

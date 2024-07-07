@@ -48,7 +48,7 @@ public class ProfessionController {
 
     @PostMapping
     public ResponseEntity<ProfessionDto> createProfession(@RequestBody ProfessionDto professionDto) {
-    	if (professionRepository.existsByLibelle(professionDto.getLibelle())) {
+    	if (professionRepository.existsByLibelleIgnoreCase(professionDto.getLibelle())) {
             throw new ResponseStatusException(HttpStatus.CONFLICT,"Cette profession existe déjà");
         }else {
         ProfessionDto createdProfession = professionService.createProfession(professionDto);
@@ -58,7 +58,7 @@ public class ProfessionController {
 
     @PutMapping("/{id}")
     public ResponseEntity<ProfessionDto> updateProfession(@PathVariable Long id, @RequestBody ProfessionDto professionDto) {
-    	if (professionRepository.existsByLibelle(professionDto.getLibelle())
+    	if (professionRepository.existsByLibelleIgnoreCase(professionDto.getLibelle())
     			&& !professionRepository.findById(id).get().getLibelle().equals(professionDto.getLibelle())) {
             throw new ResponseStatusException(HttpStatus.CONFLICT,"Cette profession existe déjà");
         }else {
