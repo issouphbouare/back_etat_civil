@@ -32,7 +32,7 @@
 			<staticText>
 				<reportElement x="170" y="0" width="180" height="20" uuid="d3d59d0d-5512-4fde-abc5-d1b42edc296d"/>
 				<textElement textAlignment="Center">
-					<font fontName="Algerian" size="12" isBold="true"/>
+					<font fontName="SansSerif" size="12" isBold="true" isItalic="true"/>
 				</textElement>
 				<text><![CDATA[REPUBLIQUE DU MALI]]></text>
 			</staticText>
@@ -49,7 +49,7 @@
 			<staticText>
 				<reportElement x="240" y="20" width="180" height="20" uuid="6311e7a3-0daf-482a-a933-7894dd2064dd"/>
 				<textElement textAlignment="Center">
-					<font size="10" isBold="true" isItalic="true"/>
+					<font fontName="SansSerif" size="10" isBold="true" isItalic="true"/>
 				</textElement>
 				<text><![CDATA[RECEPISSE DU RAVEC]]></text>
 			</staticText>
