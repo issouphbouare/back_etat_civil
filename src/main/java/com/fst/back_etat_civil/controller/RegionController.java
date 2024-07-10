@@ -1,5 +1,6 @@
 package com.fst.back_etat_civil.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +24,15 @@ import com.fst.back_etat_civil.model.Region;
 import com.fst.back_etat_civil.model.Vqf;
 import com.fst.back_etat_civil.repository.RegionRepository;
 import com.fst.back_etat_civil.service.RegionService;
+import com.fst.back_etat_civil.util.DataSanitizer;
+
+import org.springframework.web.multipart.MultipartFile;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
+import java.text.Normalizer;
+import java.io.IOException;
+
 @CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/api/region")
@@ -89,5 +99,47 @@ public class RegionController {
     ) {
         Page<Region> regions = regionService.searchRegions(keyword, page, size);
         return ResponseEntity.ok(regions);
+    }
+    
+    
+    @PostMapping("/import")
+    public ResponseEntity<?> importFile(@RequestParam("file") MultipartFile file) {
+        try {
+            List<RegionDto> regions = parseFile(file);
+            for (RegionDto region : regions) {
+                // Vérifiez l'existence en ignorant la casse et en normalisant le nom
+                if (!regionRepository.existsByCode(region.getCode()) &&
+                    !regionRepository.existsByNomIgnoreCase(normalize(region.getNom()))) {
+                    regionService.createRegion(region);
+                }
+            }
+            return ResponseEntity.ok("Importation réussie");
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Erreur lors de l'importation du fichier");
+        }
+    }
+
+    private List<RegionDto> parseFile(MultipartFile file) throws IOException {
+        List<RegionDto> regions = new ArrayList<>();
+        try (BufferedReader reader = new BufferedReader(new InputStreamReader(file.getInputStream(), StandardCharsets.UTF_16LE))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                String[] fields = line.split(",");
+                if (fields.length < 2) continue; // Ignore invalid lines
+                String code = DataSanitizer.removeNullCharacters(fields[0].trim()); // Supprimez les espaces autour du code
+                String nom = DataSanitizer.removeNullCharacters(fields[1].trim()); // Supprimez les espaces autour du nom
+                RegionDto region = new RegionDto();
+                region.setCode(code);
+                region.setNom(nom);
+                regions.add(region);
+            }
+        }
+        return regions;
+    }
+
+    private String normalize(String input) {
+        // Normalisez en NFC pour gérer les accents et autres caractères Unicode
+        return Normalizer.normalize(input, Normalizer.Form.NFC);
     }
 }
