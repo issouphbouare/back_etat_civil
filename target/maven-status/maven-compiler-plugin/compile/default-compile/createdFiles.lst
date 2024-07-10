@@ -21,6 +21,7 @@ com\fst\back_etat_civil\repository\ProfessionRepository.class
 com\fst\back_etat_civil\model\Vqf.class
 com\fst\back_etat_civil\service\CitoyenService.class
 com\fst\back_etat_civil\service\DocumentService.class
+com\fst\back_etat_civil\util\DataSanitizer.class
 com\fst\back_etat_civil\repository\CommuneRepository.class
 com\fst\back_etat_civil\services\UserDetailsImpl.class
 com\fst\back_etat_civil\SwaggerConfig.class

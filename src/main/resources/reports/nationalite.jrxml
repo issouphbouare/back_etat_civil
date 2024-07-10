@@ -201,7 +201,7 @@
 				<textElement textAlignment="Left">
 					<font size="12" isBold="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$P{cercle}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$P{commune}]]></textFieldExpression>
 			</textField>
 			<staticText>
 				<reportElement x="50" y="260" width="110" height="20" uuid="9fdd1179-6484-4a2d-91ea-dfdf7fc48025"/>
