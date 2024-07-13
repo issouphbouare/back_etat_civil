@@ -3,6 +3,10 @@ package com.fst.back_etat_civil.controller;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
@@ -25,6 +29,7 @@ import com.fst.back_etat_civil.model.Vqf;
 import com.fst.back_etat_civil.repository.RegionRepository;
 import com.fst.back_etat_civil.service.RegionService;
 import com.fst.back_etat_civil.util.DataSanitizer;
+import com.lowagie.text.Cell;
 
 import org.springframework.web.multipart.MultipartFile;
 import java.io.BufferedReader;
@@ -142,4 +147,60 @@ public class RegionController {
         // Normalisez en NFC pour gérer les accents et autres caractères Unicode
         return Normalizer.normalize(input, Normalizer.Form.NFC);
     }
+    
+    @PostMapping("/importer")
+    public ResponseEntity<?> importExcelFile(@RequestParam("file") MultipartFile file) {
+        try {
+            List<RegionDto> regions = parseExcelFile(file);
+            for (RegionDto region : regions) {
+                // Vérifiez l'existence en ignorant la casse et en normalisant le nom
+                if (!regionRepository.existsByCode(region.getCode()) &&
+                    !regionRepository.existsByNomIgnoreCase(normalize(region.getNom()))) {
+                    regionService.createRegion(region);
+                }
+            }
+            return ResponseEntity.ok("Importation réussie");
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Erreur lors de l'importation du fichier");
+        }
+    }
+
+    private List<RegionDto> parseExcelFile(MultipartFile file) throws IOException {
+        List<RegionDto> regions = new ArrayList<>();
+        try (Workbook workbook = new XSSFWorkbook(file.getInputStream())) {
+            Sheet sheet = workbook.getSheetAt(0);
+            for (Row row : sheet) {
+                if (row.getRowNum() == 0) {
+                    continue; // Ignore the header row
+                }
+                String code = getCellValueAsString(row.getCell(0));
+                String nom = getCellValueAsString(row.getCell(1));
+                if (code != null && !code.isEmpty() && nom != null && !nom.isEmpty()) {
+                    RegionDto region = new RegionDto();
+                    region.setCode(code);
+                    region.setNom(nom);
+                    regions.add(region);
+                }
+            }
+        }
+        return regions;
+    }
+
+    private String getCellValueAsString(org.apache.poi.ss.usermodel.Cell cell) {
+        if (cell == null) {
+            return "";
+        }
+        switch (cell.getCellType()) {
+            case STRING:
+                return cell.getStringCellValue().trim();
+            case NUMERIC:
+                return String.valueOf((int) cell.getNumericCellValue());
+            default:
+                return "";
+        }
+    }
+
+    
+
 }

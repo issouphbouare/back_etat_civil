@@ -27,6 +27,7 @@ com\fst\back_etat_civil\services\UserDetailsImpl.class
 com\fst\back_etat_civil\SwaggerConfig.class
 com\fst\back_etat_civil\dto\ProfessionDto.class
 com\fst\back_etat_civil\request\SignupRequest.class
+com\fst\back_etat_civil\controller\RegionController$1.class
 com\fst\back_etat_civil\controller\CercleController.class
 com\fst\back_etat_civil\controller\DocumentController.class
 com\fst\back_etat_civil\dto\CitoyenDto.class
