@@ -15,6 +15,7 @@ import com.fst.back_etat_civil.model.Region;
 @Repository
 public interface CercleRepository extends JpaRepository<Cercle, Long> {
     //List<Cercle> findByNom(String nom);
+Cercle findByCode(String code);
 List<Cercle> findByRegion(Region region);
 Boolean existsByCode(String code);
 Boolean existsByNomIgnoreCase(String code);

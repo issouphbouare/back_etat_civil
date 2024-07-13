@@ -39,5 +39,6 @@ public interface CommuneRepository extends JpaRepository<Commune, Long> {
 			   "a.autre LIKE %:keyword% ) AND " +
                "a.cercle.region.nom = 'Diaspora'")
 	    Page<Commune> searchByKeywordInAllColumnsPayes(@Param("keyword") String keyword, Pageable pageable);
+	Commune findByCode(String substring);
 
 }

@@ -39,5 +39,7 @@ public interface VqfRepository extends JpaRepository<Vqf,Long> {
 			   "a.commune.cercle.region.nom LIKE %:keyword% OR " +
 			   "a.autre LIKE %:keyword%) AND a.commune.cercle.region.nom = 'Diaspora' ")
 	    Page<Vqf> searchByKeywordInAllColumnsVille(@Param("keyword") String keyword, Pageable pageable);
+	boolean existsByNomIgnoreCase(String normalize);
+	Commune findByCode(String substring);
 
 }

@@ -29,8 +29,8 @@ public class Role {
 
 
     //
-   @ManyToMany
-    @JsonIgnore
+   @ManyToMany(fetch = FetchType.EAGER)
+    //@JsonIgnore
     private Set<User> users = new HashSet<>();
 
 

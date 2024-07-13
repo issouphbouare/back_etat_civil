@@ -1,5 +1,11 @@
 package com.fst.back_etat_civil.controller;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
+import java.text.Normalizer;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -17,6 +23,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
 
 import com.fst.back_etat_civil.dto.CercleDto;
@@ -24,11 +31,13 @@ import com.fst.back_etat_civil.dto.CommuneDto;
 import com.fst.back_etat_civil.model.Cercle;
 import com.fst.back_etat_civil.model.Citoyen;
 import com.fst.back_etat_civil.model.Commune;
+import com.fst.back_etat_civil.model.Region;
 import com.fst.back_etat_civil.model.Vqf;
 import com.fst.back_etat_civil.repository.CercleRepository;
 import com.fst.back_etat_civil.repository.CommuneRepository;
 import com.fst.back_etat_civil.service.CercleService;
 import com.fst.back_etat_civil.service.CommuneService;
+import com.fst.back_etat_civil.util.DataSanitizer;
 
 @CrossOrigin(origins = "*")
 @RestController
@@ -167,4 +176,53 @@ public class CommuneController {
 			
 		return cercle.getCode()+String.valueOf(String.format("%02d",seq));
     }
+    
+    @PostMapping("/import")
+    public ResponseEntity<?> importFile(@RequestParam("file") MultipartFile file) {
+        try {
+            List<Commune> communes = parseFile(file);
+            for (Commune commune : communes) {
+                // Vérifiez l'existence en ignorant la casse et en normalisant le nom
+                if (!communeRepository.existsByCode(commune.getCode()) &&
+                    !communeRepository.existsByNomIgnoreCase(normalize(commune.getNom()))) {
+                    communeRepository.save(commune);
+                }
+            }
+            return ResponseEntity.ok("Importation réussie");
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Erreur lors de l'importation du fichier");
+        }
+    }
+
+    private List<Commune> parseFile(MultipartFile file) throws IOException {
+        List<Commune> communes = new ArrayList<>();
+        try (BufferedReader reader = new BufferedReader(new InputStreamReader(file.getInputStream(), StandardCharsets.UTF_16LE))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                String[] fields = line.split(",");
+                if (fields.length < 2) continue; // Ignore invalid lines
+                String nom = DataSanitizer.removeNullCharacters(fields[0].trim()); // Supprimez les espaces autour du code
+                String code = DataSanitizer.removeNullCharacters(fields[1].trim()); // Supprimez les espaces autour du nom
+                //String cercle = DataSanitizer.removeNullCharacters(fields[2].trim());
+                Commune commune = new Commune();
+                commune.setCode(code);
+                commune.setNom(nom);
+                Cercle cercle1 = cercleRepository.findByCode(code.substring(0, 4));
+                if (cercle1!=null) {
+                    commune.setCercle(cercle1);
+                    communes.add(commune);
+                } else {
+                    System.out.println("Région non trouvée pour l'ID: ");
+                }
+            }
+        }
+        return communes;
+    }
+
+    private String normalize(String input) {
+        // Normalisez en NFC pour gérer les accents et autres caractères Unicode
+        return Normalizer.normalize(input, Normalizer.Form.NFC);
+    }
+
 }
