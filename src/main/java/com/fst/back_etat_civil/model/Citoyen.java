@@ -9,9 +9,12 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonProperty.Access;
 
 import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 
 @Data
 @Entity
@@ -43,8 +46,8 @@ public class Citoyen {
     private Date dateNaissance;
 
     private String telephone;
-    //@JsonIgnore
-    @ManyToOne //(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+    @JsonIgnore
+    @ManyToOne (cascade = CascadeType.ALL,fetch = FetchType.EAGER)
     @JoinColumn(name = "prof_id")
     private Profession profession;
 
@@ -62,8 +65,8 @@ public class Citoyen {
     
     private String prenomPere;
 
-   //@JsonIgnore
-    @ManyToOne //(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+   @JsonIgnore
+    @ManyToOne (cascade = CascadeType.ALL,fetch = FetchType.EAGER)
     @JoinColumn(name = "profP_id")
     private Profession professionPere;
 
@@ -74,20 +77,24 @@ public class Citoyen {
 
     @Column( name = "prenom_mere")
     private String prenomMere;
-    //@JsonIgnore
-    @ManyToOne//(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+    @JsonIgnore
+    @ManyToOne (cascade = CascadeType.ALL,fetch = FetchType.EAGER)
     @JoinColumn(name = "profM_id")
     private Profession professionMere;
 
-    //@JsonIgnore
-    @ManyToOne //(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+    @JsonIgnore
+    @ManyToOne (cascade = CascadeType.ALL,fetch = FetchType.EAGER)
     @JoinColumn(name = "lieuNaissance_id")
     private Vqf lieuNaissance;
     
-    //@JsonIgnore
-    @ManyToOne //(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+    @JsonIgnore
+    @ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
     @JoinColumn(name = "adresse_id")
     private Vqf adresse;
+    
+    @OneToMany(mappedBy = "citoyen", cascade = CascadeType.ALL)
+	@JsonProperty(access = Access.WRITE_ONLY)
+    private List<Document> documents;
     
    
     private String rue;
