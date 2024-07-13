@@ -204,7 +204,7 @@ public class VqfService {
     	long seq=1;
     	for (Vqf v : vqfs) seq++;
 			
-		return commune.getCode()+String.valueOf(String.format("%02d",seq));
+		return commune.getCode()+String.valueOf(String.format("%06d",seq));
     }
 
 }
