@@ -6,7 +6,10 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
+import javax.persistence.Cacheable;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -68,7 +71,7 @@ public class AuthController {
 
     @PostMapping("/signin")
     @ApiOperation(value = "Add Project")
-
+    
     public ResponseEntity<?> authenticateUser(@RequestBody LoginRequest loginRequest) {
 
         Authentication authentication = authenticationManager.authenticate(
@@ -93,6 +96,7 @@ public class AuthController {
     }
     
     @PostMapping("/signup")
+    @CacheEvict(value = "users", allEntries = true)
     public ResponseEntity<?> registerUser(@RequestBody SignupRequest signUpRequest) {
         if (userRepository.existsByUsername(signUpRequest.getUsername())) {
             throw new ResponseStatusException(HttpStatus.CONFLICT, "Ce nom utilisateur existe déjà");
