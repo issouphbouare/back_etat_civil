@@ -10,14 +10,23 @@ import org.springframework.web.server.ResponseStatusException;
 import com.fst.back_etat_civil.dto.CitoyenDto;
 import com.fst.back_etat_civil.dto.*;
 import com.fst.back_etat_civil.service.*;
+import com.google.zxing.BarcodeFormat;
+import com.google.zxing.client.j2se.MatrixToImageWriter;
+import com.google.zxing.common.BitMatrix;
+import com.google.zxing.qrcode.QRCodeWriter;
 import com.fst.back_etat_civil.service.*;
 
 import net.sf.jasperreports.engine.JRException;
 
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+
+import javax.imageio.ImageIO;
 
 @CrossOrigin(origins = "*")
 @RestController
@@ -95,7 +104,7 @@ public class JasperController {
     }
     
     @GetMapping("/carte/{id}")
-    public ResponseEntity<byte[]> generateCarte(@PathVariable Long id) throws IOException {
+    public ResponseEntity<byte[]> generateCarte(@PathVariable Long id) throws Exception {
         // Récupérer les détails du citoyen
         CitoyenDto citoyen = citoyenService.getCitoyenById(id);
         VqfDto adresse = vqfService.getVqfById(citoyen.getAdresse());
@@ -135,6 +144,19 @@ public class JasperController {
         parameters.put("sexe", (citoyen.getGenre().equals("Femme"))?"F":"M");
         parameters.put("toDay", new Date());
         // Ajoutez d'autres paramètres si nécessaire
+        
+        //Generation du codeQR
+        String qrContent = "NICIV: " + citoyen.getNiciv() + ",\n"
+                + "Telephone: " + citoyen.getTelephone() + ",\n"
+                + "PRENOM: " + citoyen.getPrenom() + ",\n"
+                + "NOM: " + citoyen.getNom();
+
+
+        ByteArrayInputStream qrCodeImage = generateQRCodeImage(qrContent);
+        parameters.put("qrCode", qrCodeImage);
+        ByteArrayInputStream qrCodeImage1 = generateQRCodeImage(qrContent);
+        parameters.put("qrCode1", qrCodeImage1);
+
 
         // Générer le reçu
         try {
@@ -203,7 +225,7 @@ public class JasperController {
     }
     
     @GetMapping("/nationalite/{id}")
-    public ResponseEntity<byte[]> generateNationalite(@PathVariable Long id) throws IOException {
+    public ResponseEntity<byte[]> generateNationalite(@PathVariable Long id, @RequestParam Long numero) throws IOException {
         // Récupérer les détails du citoyen
         CitoyenDto citoyen = citoyenService.getCitoyenById(id);
         VqfDto adresse = vqfService.getVqfById(citoyen.getAdresse());
@@ -241,6 +263,7 @@ public class JasperController {
         parameters.put("communeA", communeA.getNom());
         parameters.put("lieuNaissance", lieu.getNom());
         parameters.put("toDay", new Date());
+        parameters.put("numero", numero);
         
         
         // Ajoutez d'autres paramètres si nécessaire
@@ -251,6 +274,19 @@ public class JasperController {
         } catch (JRException e) {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Erreur lors de la génération du nationalite", e);
         }
+    }
+    
+    
+    
+    
+    public static ByteArrayInputStream generateQRCodeImage(String text) throws Exception {
+        QRCodeWriter qrCodeWriter = new QRCodeWriter();
+        BitMatrix bitMatrix = qrCodeWriter.encode(text, BarcodeFormat.QR_CODE, 200, 200);
+
+        ByteArrayOutputStream pngOutputStream = new ByteArrayOutputStream();
+        BufferedImage bufferedImage = MatrixToImageWriter.toBufferedImage(bitMatrix);
+        ImageIO.write(bufferedImage, "png", pngOutputStream);
+        return new ByteArrayInputStream(pngOutputStream.toByteArray());
     }
 }
 

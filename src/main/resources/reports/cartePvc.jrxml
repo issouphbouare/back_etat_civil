@@ -23,6 +23,8 @@
 	<parameter name="imageUrl" class="java.lang.String"/>
 	<parameter name="sexe" class="java.lang.String"/>
 	<parameter name="toDay" class="java.util.Date"/>
+	<parameter name="qrCode" class="java.io.InputStream"/>
+	<parameter name="qrCode1" class="java.io.InputStream"/>
 	<title>
 		<band height="1" splitType="Stretch"/>
 	</title>
@@ -172,11 +174,11 @@
 				<text><![CDATA[Domicile :]]></text>
 			</staticText>
 			<image>
-				<reportElement x="141" y="11" width="39" height="39" uuid="d27d7d49-8269-4161-a853-f76e6acfd8c4"/>
+				<reportElement x="143" y="13" width="39" height="39" uuid="d27d7d49-8269-4161-a853-f76e6acfd8c4"/>
 				<imageExpression><![CDATA["reports/drapeau.jpg"]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="140" y="55" width="70" height="80" uuid="f8df2647-278e-4a78-98ef-ad65f3fb3564"/>
+				<reportElement x="143" y="50" width="70" height="80" uuid="f8df2647-278e-4a78-98ef-ad65f3fb3564"/>
 				<imageExpression><![CDATA[$P{imageUrl}]]></imageExpression>
 			</image>
 			<image>
@@ -184,7 +186,7 @@
 				<imageExpression><![CDATA[$P{imageUrl}]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="390" y="11" width="39" height="39" uuid="94b65d25-b8a2-4f29-9f45-9b754cade143"/>
+				<reportElement x="398" y="13" width="39" height="39" uuid="94b65d25-b8a2-4f29-9f45-9b754cade143"/>
 				<imageExpression><![CDATA["reports/armoirie.jpg"]]></imageExpression>
 			</image>
 			<staticText>
@@ -226,53 +228,49 @@
 				<reportElement x="138" y="159" width="300" height="131" uuid="97507111-ef07-4f38-aa08-8c9fe0979fae"/>
 			</rectangle>
 			<staticText>
-				<reportElement x="173" y="160" width="228" height="31" uuid="aa3ce40e-fe9f-466b-9842-45f3ded839bd"/>
+				<reportElement x="173" y="160" width="227" height="31" uuid="aa3ce40e-fe9f-466b-9842-45f3ded839bd"/>
 				<textElement textAlignment="Center">
 					<font size="9" isBold="true" isItalic="true"/>
 				</textElement>
 				<text><![CDATA[Ministère de l'Administration Territoriale, de la Décentralisation et de l'Aménagement du Territoire]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="204" y="191" width="60" height="15" uuid="f27c195f-235c-472e-ba54-c956e0de697b"/>
+				<reportElement x="204" y="191" width="59" height="15" uuid="f27c195f-235c-472e-ba54-c956e0de697b"/>
 				<textElement textAlignment="Left">
 					<font size="7" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Localisation : ]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="264" y="191" width="137" height="15" uuid="3440859f-a3d2-4a34-8f1d-a2a36cce6cf3"/>
+				<reportElement x="264" y="191" width="136" height="15" uuid="3440859f-a3d2-4a34-8f1d-a2a36cce6cf3"/>
 				<textElement>
 					<font size="8" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{regionA}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="264" y="206" width="137" height="15" uuid="144adee9-2951-459b-8b89-71fce51012df"/>
+				<reportElement x="264" y="206" width="136" height="15" uuid="144adee9-2951-459b-8b89-71fce51012df"/>
 				<textElement>
 					<font size="8" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{adresse}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="204" y="206" width="60" height="15" uuid="3e0c114a-d9f3-4711-9e56-dc13f3d052c7"/>
+				<reportElement x="204" y="206" width="59" height="15" uuid="3e0c114a-d9f3-4711-9e56-dc13f3d052c7"/>
 				<textElement textAlignment="Left">
 					<font size="7" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Titulaire : ]]></text>
 			</staticText>
-			<image>
-				<reportElement x="403" y="222" width="35" height="32" uuid="87a79659-04ca-4da6-bd8b-ee58ae53b4e7"/>
-				<imageExpression><![CDATA["reports/images/QRCode.jpg"]]></imageExpression>
-			</image>
 			<staticText>
-				<reportElement x="180" y="221" width="221" height="19" uuid="0f24bf29-7a34-4b7d-9c42-0612ee05a4c0"/>
+				<reportElement x="180" y="221" width="220" height="19" uuid="0f24bf29-7a34-4b7d-9c42-0612ee05a4c0"/>
 				<textElement textAlignment="Center">
 					<font size="12" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Numéro d'Identification Civique]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="180" y="240" width="223" height="21" uuid="48709ad3-5a26-452e-a0d0-8dd59b37ea6a"/>
+				<reportElement x="180" y="240" width="220" height="21" uuid="48709ad3-5a26-452e-a0d0-8dd59b37ea6a"/>
 				<textElement textAlignment="Center">
 					<font size="12" isBold="true"/>
 				</textElement>
@@ -280,11 +278,15 @@
 			</textField>
 			<image>
 				<reportElement x="143" y="222" width="35" height="32" uuid="805a9ae4-585a-45c2-bafe-848f5f3511a6"/>
-				<imageExpression><![CDATA["reports/images/QRCode.jpg"]]></imageExpression>
+				<imageExpression><![CDATA[$P{qrCode}]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="210" y="261" width="197" height="29" uuid="e8af1a75-2883-4eaf-bc15-18f925fc9a36"/>
+				<reportElement x="210" y="259" width="197" height="29" uuid="e8af1a75-2883-4eaf-bc15-18f925fc9a36"/>
 				<imageExpression><![CDATA["reports/images/qrlongue.jpg"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="403" y="221" width="35" height="32" uuid="98043d45-1939-433f-b3c6-3bbd83ba81b8"/>
+				<imageExpression><![CDATA[$P{qrCode1}]]></imageExpression>
 			</image>
 		</band>
 	</detail>
