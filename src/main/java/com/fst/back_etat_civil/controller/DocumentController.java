@@ -23,8 +23,12 @@ import org.springframework.web.server.ResponseStatusException;
 
 import com.fst.back_etat_civil.dto.DocumentDto;
 import com.fst.back_etat_civil.dto.DocumentDto;
+import com.fst.back_etat_civil.model.Citoyen;
 import com.fst.back_etat_civil.model.Document;
+import com.fst.back_etat_civil.model.Profession;
+import com.fst.back_etat_civil.model.Vqf;
 import com.fst.back_etat_civil.model.Document;
+import com.fst.back_etat_civil.repository.CitoyenRepository;
 import com.fst.back_etat_civil.repository.DocumentRepository;
 import com.fst.back_etat_civil.service.DocumentService;
 
@@ -35,6 +39,8 @@ public class DocumentController {
     @Autowired
     DocumentRepository documentRepository;
     
+    @Autowired
+    CitoyenRepository citoyenRepository;
     @Autowired
     DocumentService documentService;
 
@@ -55,14 +61,31 @@ public class DocumentController {
     @PostMapping
     public ResponseEntity<DocumentDto> createDocument(@RequestBody DocumentDto documentDto) {
     	
-        try {
-			documentService.createDocument(documentDto);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-        return new ResponseEntity<>(documentDto, HttpStatus.CREATED);
-        
+    	 try {
+             Optional<Citoyen> citoyen=citoyenRepository.findById(documentDto.getCitoyen());
+             
+              Document document1= new Document();
+              //MAPPING
+              document1.setNom(documentDto.getNom());
+              document1.setType(documentDto.getType());
+              
+              
+              
+              
+               if(!citoyen.isPresent())
+                   throw new ResponseStatusException(HttpStatus.NOT_FOUND,"VQF NOT FOUND");
+               document1.setCitoyen(citoyen.get());
+               document1.setNom(documentDto.getType()+"_"+citoyen.get().getNiciv());
+              
+
+              Document _document = documentRepository
+                      .save(document1);
+              documentDto.setId(_document.getId());
+
+              return new ResponseEntity<>(documentDto, HttpStatus.CREATED);
+          } catch (NullPointerException e) {
+              return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+          }
     }
     
 
