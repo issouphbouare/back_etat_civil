@@ -266,6 +266,7 @@ public class JasperController {
         parameters.put("numero", numero);
         
         
+        
         // Ajoutez d'autres paramètres si nécessaire
 
         // Générer le reçu
