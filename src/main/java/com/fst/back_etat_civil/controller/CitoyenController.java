@@ -290,7 +290,7 @@ public class CitoyenController {
     }
 
     private List<CitoyenDto> parseFile(MultipartFile file) throws IOException, ParseException {
-    	List<Long> list = Arrays.asList(17L, 6L, 12L, 18L, 19L);
+    	List<Long> list = Arrays.asList(2L, 6L, 3L, 4L, 5L);
     	long number=60009842;
         List<CitoyenDto> citoyens = new ArrayList<>();
         try (BufferedReader reader = new BufferedReader(new InputStreamReader(file.getInputStream(), StandardCharsets.UTF_16LE))) {
@@ -313,12 +313,12 @@ public class CitoyenController {
                 citoyen.setProfession((long) list.get(new Random().nextInt(list.size())));
                 citoyen.setProfessionPere((long) list.get(new Random().nextInt(list.size())));
                 citoyen.setProfessionMere((long) list.get(new Random().nextInt(list.size())));
-                citoyen.setLieuNaissance((long) 223 + new java.util.Random().nextInt(249 - 223 + 1));
-                citoyen.setAdresse((long) 223 + new java.util.Random().nextInt(249 - 223 + 1));
+                citoyen.setLieuNaissance((long) list.get(new Random().nextInt(list.size())));
+                citoyen.setAdresse((long) list.get(new Random().nextInt(list.size())));
                 citoyen.setRue(String.valueOf(new Random().nextInt(20002)));
                 citoyen.setPorte(String.valueOf(new Random().nextInt(10001)));
                 citoyen.setTelephone(String.valueOf(number));
-                citoyen.setCivilite("Marié(e)");
+                citoyen.setCivilite("Celibataire");
                 
                 
                 
