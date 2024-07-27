@@ -97,6 +97,10 @@ public class Citoyen {
 	@JsonProperty(access = Access.WRITE_ONLY)
     private List<Document> documents;
     
+    @OneToMany(mappedBy = "citoyen", cascade = CascadeType.ALL)
+   	@JsonProperty(access = Access.WRITE_ONLY)
+       private List<Document> condamnations;
+    
    
     private String rue;
 
