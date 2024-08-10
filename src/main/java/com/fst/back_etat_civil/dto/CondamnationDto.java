@@ -18,5 +18,7 @@ public class CondamnationDto {
     private Date dateCondamnation;
     private Date dateDetention;
     private Date dateDelitCrime;
+    private String quantum;
     private long citoyen;
+    
 }

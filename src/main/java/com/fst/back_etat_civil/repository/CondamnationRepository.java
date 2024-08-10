@@ -21,6 +21,7 @@ public interface CondamnationRepository extends JpaRepository<Condamnation, Long
     @Query("SELECT a FROM Condamnation a WHERE " +
 			   "CAST(a.id AS string) LIKE %:keyword% OR " +
 			   "a.juridiction LIKE %:keyword% OR " +
+			   "a.quantum LIKE %:keyword% OR " +
 			   "a.natureDelitCrime LIKE %:keyword% OR " +
 			   "CAST(a.dateCondamnation AS string) LIKE %:keyword% OR " +
 			   "CAST(a.dateDetention AS string) LIKE %:keyword% OR " +

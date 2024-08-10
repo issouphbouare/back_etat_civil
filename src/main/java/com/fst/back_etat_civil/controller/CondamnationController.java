@@ -62,6 +62,7 @@ public class CondamnationController {
               //MAPPING
               condamnation1.setNatureDelitCrime(condamnationDto.getNatureDelitCrime());
               condamnation1.setJuridiction(condamnationDto.getJuridiction());
+              condamnation1.setQuantum(condamnationDto.getQuantum());
               condamnation1.setDateCondamnation(condamnationDto.getDateCondamnation());
               condamnation1.setDateDelitCrime(condamnationDto.getDateDelitCrime());
               condamnation1.setDateDetention(condamnationDto.getDateDetention());
