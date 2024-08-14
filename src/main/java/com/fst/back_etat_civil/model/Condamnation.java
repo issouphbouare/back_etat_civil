@@ -26,11 +26,8 @@ public class Condamnation {
     @NotNull
     @Column( name = "natureDelitCrime")
     private String natureDelitCrime;
-
     
     private String quantum;
-
-
 
     
     private Date dateCondamnation;

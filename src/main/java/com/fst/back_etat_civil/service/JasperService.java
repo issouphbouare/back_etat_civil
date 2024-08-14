@@ -93,7 +93,6 @@ public class JasperService {
 
 			        return new ResponseEntity<>(pdfBytes, headers, HttpStatus.OK);
 			    }
-
 	
 	//Generation de carte
 		public ResponseEntity<byte[]> generateCarte(Map<String, Object> parameters) throws JRException, IOException {

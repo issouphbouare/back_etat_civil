@@ -46,9 +46,7 @@ public class CondamnationService {
             condamnationDto.setId(condamnation.getId());
             condamnationDto.setJuridiction(condamnation.getJuridiction());
             condamnationDto.setNatureDelitCrime(condamnation.getNatureDelitCrime());
-
             condamnationDto.setQuantum(condamnation.getQuantum());
-
             condamnationDto.setDateCondamnation(condamnation.getDateCondamnation());
             condamnationDto.setDateDelitCrime(condamnation.getDateDelitCrime());
             condamnationDto.setDateDetention(condamnation.getDateDetention());
@@ -79,9 +77,7 @@ public class CondamnationService {
             condamnationDto.setJuridiction(condamnation.getJuridiction());
             condamnationDto.setNatureDelitCrime(condamnation.getNatureDelitCrime());
             condamnationDto.setDateCondamnation(condamnation.getDateCondamnation());
-
             condamnationDto.setQuantum(condamnation.getQuantum());
-
             condamnationDto.setDateDelitCrime(condamnation.getDateDelitCrime());
             condamnationDto.setDateDetention(condamnation.getDateDetention());
 
@@ -107,10 +103,7 @@ public class CondamnationService {
             condamnationDto.setId(condamnation.getId());
             condamnationDto.setJuridiction(condamnation.getJuridiction());
             condamnationDto.setNatureDelitCrime(condamnation.getNatureDelitCrime());
-
             condamnationDto.setQuantum(condamnation.getQuantum());
-
-
             condamnationDto.setDateCondamnation(condamnation.getDateCondamnation());
             condamnationDto.setDateDelitCrime(condamnation.getDateDelitCrime());
             condamnationDto.setDateDetention(condamnation.getDateDetention());
@@ -151,10 +144,7 @@ public class CondamnationService {
             //condamnation1.setId(condamnation.getId());
             condamnation1.setJuridiction(condamnation.getJuridiction());
             condamnation1.setNatureDelitCrime(condamnation.getNatureDelitCrime());
-
             condamnation1.setQuantum(condamnation.getQuantum());
-
-
             condamnation1.setDateCondamnation(condamnation.getDateCondamnation());
             condamnation1.setDateDelitCrime(condamnation.getDateDelitCrime());
             condamnation1.setDateDetention(condamnation.getDateDetention());
@@ -192,10 +182,7 @@ public class CondamnationService {
         condamnationDto.setId(condamnation.getId());
         condamnationDto.setJuridiction(condamnation.getJuridiction());
         condamnationDto.setNatureDelitCrime(condamnation.getNatureDelitCrime());
-
         condamnationDto.setQuantum(condamnation.getQuantum());
-
-
         condamnationDto.setDateCondamnation(condamnation.getDateCondamnation());
         condamnationDto.setDateDelitCrime(condamnation.getDateDelitCrime());
         condamnationDto.setDateDetention(condamnation.getDateDetention());
@@ -220,10 +207,7 @@ public class CondamnationService {
         condamnation.setId(condamnation.getId());
         condamnation.setJuridiction(condamnationDto.getJuridiction());
         condamnation.setNatureDelitCrime(condamnationDto.getNatureDelitCrime());
-
         condamnationDto.setQuantum(condamnation.getQuantum());
-
-
         condamnation.setDateCondamnation(condamnationDto.getDateCondamnation());
         condamnation.setDateDelitCrime(condamnationDto.getDateDelitCrime());
         condamnation.setDateDetention(condamnationDto.getDateDetention());

@@ -293,10 +293,9 @@ public class JasperController {
     
     
     
-
     
     @GetMapping("/casier/{id}")
-    public ResponseEntity<byte[]> generateCasier(@PathVariable Long id, @RequestParam Long numero) throws Exception {
+    public ResponseEntity<byte[]> downloadCondamnationsReport(@PathVariable Long id, @RequestParam Long numero) throws Exception {
         try {
             byte[] data = recuService.generateCasier(id, numero);
 
@@ -315,8 +314,6 @@ public class JasperController {
 
     
     
-
-
     public static ByteArrayInputStream generateQRCodeImage(String text) throws Exception {
         QRCodeWriter qrCodeWriter = new QRCodeWriter();
         BitMatrix bitMatrix = qrCodeWriter.encode(text, BarcodeFormat.QR_CODE, 200, 200);
@@ -326,9 +323,6 @@ public class JasperController {
         ImageIO.write(bufferedImage, "png", pngOutputStream);
         return new ByteArrayInputStream(pngOutputStream.toByteArray());
     }
-
     
-
-
 }
 
