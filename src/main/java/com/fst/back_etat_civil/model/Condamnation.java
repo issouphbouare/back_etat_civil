@@ -28,6 +28,11 @@ public class Condamnation {
     private String natureDelitCrime;
 
     
+    private String quantum;
+
+
+
+    
     private Date dateCondamnation;
     
     

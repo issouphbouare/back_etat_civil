@@ -2,7 +2,9 @@ package com.fst.back_etat_civil.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
@@ -17,13 +19,22 @@ import com.google.zxing.qrcode.QRCodeWriter;
 import com.fst.back_etat_civil.service.*;
 
 import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperExportManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
+import net.sf.jasperreports.engine.util.JRLoader;
+import net.sf.jasperreports.repo.InputStreamResource;
 
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.imageio.ImageIO;
@@ -47,6 +58,8 @@ public class JasperController {
     private ProfessionService professionService;
     @Autowired
     private ImageController imageController;
+    @Autowired
+    private CondamnationService condamnationService;
     
 
     @Autowired
@@ -197,7 +210,7 @@ public class JasperController {
         
         parameters.put("region", !(region.getNom().equals("Diaspora"))? "Region : "+region.getNom() : "");
         parameters.put("cercle", (region.getNom().equals("Diaspora"))? "Continent : "+cercle.getNom() : "Cercle : "+cercle.getNom());
-        parameters.put("commune", (region.getNom().equals("Diaspora"))? "Payes : "+commune.getNom() : "Commune : "+commune.getNom());
+        parameters.put("commune", (region.getNom().equals("Diaspora"))? "Pays : "+commune.getNom() : "Arr : "+commune.getNom());
         parameters.put("adresse", (regionA.getNom().equals("Diaspora"))? "Ville : "+adresse.getNom() :"VQF : "+adresse.getNom());
         parameters.put("rue", citoyen.getRue());
         parameters.put("porte", citoyen.getPorte());
@@ -205,7 +218,7 @@ public class JasperController {
         
         parameters.put("regionA", !(regionA.getNom().equals("Diaspora"))? "Region : "+regionA.getNom() : "");
         parameters.put("cercleA", (regionA.getNom().equals("Diaspora"))? "Continent : "+cercleA.getNom() : "Cercle : "+cercleA.getNom());
-        parameters.put("communeA", (regionA.getNom().equals("Diaspora"))? "Payes : "+communeA.getNom() : "Commune : "+communeA.getNom());
+        parameters.put("communeA", (regionA.getNom().equals("Diaspora"))? "Pays : "+communeA.getNom() : "Arr : "+communeA.getNom());
         parameters.put("lieuNaissance", (region.getNom().equals("Diaspora"))? "Ville : "+lieu.getNom() : "VQF : "+lieu.getNom());
         parameters.put("profession", profession.getLibelle());
         parameters.put("professionPere", professionPere.getLibelle());
@@ -280,6 +293,30 @@ public class JasperController {
     
     
     
+
+    
+    @GetMapping("/casier/{id}")
+    public ResponseEntity<byte[]> generateCasier(@PathVariable Long id, @RequestParam Long numero) throws Exception {
+        try {
+            byte[] data = recuService.generateCasier(id, numero);
+
+            HttpHeaders headers = new HttpHeaders();
+            headers.setContentType(MediaType.APPLICATION_PDF);
+            headers.setContentDispositionFormData("attachment", "casier_"+numero.toString()+".pdf");
+
+            return ResponseEntity.ok()
+                    .headers(headers)
+                    .body(data);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(500).body(null);
+        }
+    }
+
+    
+    
+
+
     public static ByteArrayInputStream generateQRCodeImage(String text) throws Exception {
         QRCodeWriter qrCodeWriter = new QRCodeWriter();
         BitMatrix bitMatrix = qrCodeWriter.encode(text, BarcodeFormat.QR_CODE, 200, 200);
@@ -289,5 +326,9 @@ public class JasperController {
         ImageIO.write(bufferedImage, "png", pngOutputStream);
         return new ByteArrayInputStream(pngOutputStream.toByteArray());
     }
+
+    
+
+
 }
 
