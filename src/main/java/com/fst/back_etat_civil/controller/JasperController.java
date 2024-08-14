@@ -295,7 +295,7 @@ public class JasperController {
     
     
     @GetMapping("/casier/{id}")
-    public ResponseEntity<byte[]> downloadCondamnationsReport(@PathVariable Long id, @RequestParam Long numero) throws Exception {
+    public ResponseEntity<byte[]> generateCasier(@PathVariable Long id, @RequestParam Long numero) throws Exception {
         try {
             byte[] data = recuService.generateCasier(id, numero);
 
