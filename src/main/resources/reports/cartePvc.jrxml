@@ -22,6 +22,7 @@
 	<parameter name="profession" class="java.lang.String"/>
 	<parameter name="imageUrl" class="java.lang.String"/>
 	<parameter name="sexe" class="java.lang.String"/>
+	<parameter name="portrait" class="java.lang.String"/>
 	<parameter name="toDay" class="java.util.Date"/>
 	<parameter name="qrCode" class="java.io.InputStream"/>
 	<parameter name="qrCode1" class="java.io.InputStream"/>
@@ -179,11 +180,11 @@
 			</image>
 			<image>
 				<reportElement x="143" y="50" width="70" height="80" uuid="f8df2647-278e-4a78-98ef-ad65f3fb3564"/>
-				<imageExpression><![CDATA[$P{imageUrl}]]></imageExpression>
+				<imageExpression><![CDATA[$P{portrait} != null ? $P{imageUrl} : "reports/images/profil.png"]]></imageExpression>
 			</image>
 			<image>
 				<reportElement x="390" y="60" width="40" height="35" uuid="dae76980-4d7a-4d27-a104-0aff874d24e0"/>
-				<imageExpression><![CDATA[$P{imageUrl}]]></imageExpression>
+				<imageExpression><![CDATA[$P{portrait} != null ? $P{imageUrl} : "reports/images/profil.png"]]></imageExpression>
 			</image>
 			<image>
 				<reportElement x="398" y="13" width="39" height="39" uuid="94b65d25-b8a2-4f29-9f45-9b754cade143"/>

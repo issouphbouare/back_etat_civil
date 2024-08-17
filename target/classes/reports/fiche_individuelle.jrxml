@@ -27,6 +27,7 @@
 	<parameter name="professionMere" class="java.lang.String"/>
 	<parameter name="imageUrl" class="java.lang.String"/>
 	<parameter name="sexe" class="java.lang.String"/>
+	<parameter name="portrait" class="java.lang.String"/>
 	<parameter name="toDay" class="java.util.Date"/>
 	<title>
 		<band splitType="Stretch"/>
@@ -100,7 +101,7 @@
 			</rectangle>
 			<image>
 				<reportElement x="-6" y="173" width="115" height="117" uuid="a315f382-7fba-4b2c-9270-d965619d4c77"/>
-				<imageExpression><![CDATA[$P{imageUrl}]]></imageExpression>
+				<imageExpression><![CDATA[$P{portrait} != null ? $P{imageUrl} : "reports/images/profil.png"]]></imageExpression>
 			</image>
 			<staticText>
 				<reportElement x="-10" y="150" width="50" height="20" uuid="fd3d7f6b-b93f-4660-8c29-860b632c1cc1"/>

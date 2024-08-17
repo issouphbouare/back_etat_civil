@@ -156,6 +156,7 @@ public class JasperController {
         parameters.put("imageUrl", "http://localhost:8080/api/citoyen/affichePortrait/"+citoyen.getPortrait());
         parameters.put("sexe", (citoyen.getGenre().equals("Femme"))?"F":"M");
         parameters.put("toDay", new Date());
+        parameters.put("portrait", citoyen.getPortrait());
         // Ajoutez d'autres paramètres si nécessaire
         
         //Generation du codeQR
@@ -226,6 +227,7 @@ public class JasperController {
         parameters.put("imageUrl", "http://localhost:8080/api/citoyen/affichePortrait/"+citoyen.getPortrait());
         parameters.put("sexe", citoyen.getGenre());
         parameters.put("toDay", new Date());
+        parameters.put("portrait", citoyen.getPortrait());
         // Ajoutez d'autres paramètres si nécessaire
         
        
