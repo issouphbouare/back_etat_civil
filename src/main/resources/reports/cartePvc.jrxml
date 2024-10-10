@@ -180,11 +180,11 @@
 			</image>
 			<image>
 				<reportElement x="143" y="50" width="70" height="80" uuid="f8df2647-278e-4a78-98ef-ad65f3fb3564"/>
-				<imageExpression><![CDATA[$P{portrait} != null ? $P{imageUrl} : "reports/images/profil.png"]]></imageExpression>
+				<imageExpression><![CDATA[$P{portrait} != null ? $P{imageUrl} : "reports/images/no_img.png"]]></imageExpression>
 			</image>
 			<image>
 				<reportElement x="390" y="60" width="40" height="35" uuid="dae76980-4d7a-4d27-a104-0aff874d24e0"/>
-				<imageExpression><![CDATA[$P{portrait} != null ? $P{imageUrl} : "reports/images/profil.png"]]></imageExpression>
+				<imageExpression><![CDATA[$P{portrait} != null ? $P{imageUrl} : "reports/images/no_img.png"]]></imageExpression>
 			</image>
 			<image>
 				<reportElement x="398" y="13" width="39" height="39" uuid="94b65d25-b8a2-4f29-9f45-9b754cade143"/>
@@ -264,29 +264,29 @@
 				<text><![CDATA[Titulaire : ]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="180" y="221" width="220" height="19" uuid="0f24bf29-7a34-4b7d-9c42-0612ee05a4c0"/>
+				<reportElement x="198" y="221" width="186" height="19" uuid="0f24bf29-7a34-4b7d-9c42-0612ee05a4c0"/>
 				<textElement textAlignment="Center">
 					<font size="12" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Numéro d'Identification Civique]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="180" y="240" width="220" height="21" uuid="48709ad3-5a26-452e-a0d0-8dd59b37ea6a"/>
+				<reportElement x="198" y="240" width="186" height="21" uuid="48709ad3-5a26-452e-a0d0-8dd59b37ea6a"/>
 				<textElement textAlignment="Center">
 					<font size="12" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{niciv}]]></textFieldExpression>
 			</textField>
 			<image>
-				<reportElement x="143" y="222" width="35" height="32" uuid="805a9ae4-585a-45c2-bafe-848f5f3511a6"/>
-				<imageExpression><![CDATA[$P{qrCode}]]></imageExpression>
-			</image>
-			<image>
 				<reportElement x="210" y="259" width="197" height="29" uuid="e8af1a75-2883-4eaf-bc15-18f925fc9a36"/>
 				<imageExpression><![CDATA["reports/images/qrlongue.jpg"]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="403" y="221" width="35" height="32" uuid="98043d45-1939-433f-b3c6-3bbd83ba81b8"/>
+				<reportElement x="384" y="221" width="48" height="49" uuid="98043d45-1939-433f-b3c6-3bbd83ba81b8"/>
+				<imageExpression><![CDATA[$P{qrCode}]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="143" y="221" width="48" height="49" uuid="c0b2da50-4b3f-4ff3-a4a1-9787cf2ada14"/>
 				<imageExpression><![CDATA[$P{qrCode1}]]></imageExpression>
 			</image>
 		</band>

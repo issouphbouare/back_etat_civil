@@ -39,6 +39,7 @@ import com.fst.back_etat_civil.dto.CitoyenDto;
 import com.fst.back_etat_civil.dto.RegionDto;
 import com.fst.back_etat_civil.model.Cercle;
 import com.fst.back_etat_civil.model.Citoyen;
+import com.fst.back_etat_civil.model.FormDeces;
 import com.fst.back_etat_civil.model.Profession;
 import com.fst.back_etat_civil.model.Region;
 import com.fst.back_etat_civil.model.Vqf;
@@ -100,7 +101,7 @@ public class CitoyenController {
             citoyen1.setPrenom(citoyen.getPrenom());
             citoyen1.setDateNaissance(citoyen.getDateNaissance());
             citoyen1.setTelephone(citoyen.getTelephone());
-            // citoyen1.setProfession(citoyen.getProfession());
+            citoyen1.setEtat("vivante");
             citoyen1.setGenre(citoyen.getGenre());
             citoyen1.setNomMere(citoyen.getNomMere());
             citoyen1.setPrenomMere(citoyen.getPrenomMere());
@@ -178,6 +179,14 @@ public class CitoyenController {
     public ResponseEntity<Void> deleteCitoyen(@PathVariable long id) {
         citoyenService.deleteCitoyen(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+    
+    @PutMapping("/declarerDeces/{id}")
+    public void decesCitoyen(@PathVariable long id, @RequestBody FormDeces formDeces) {
+        Citoyen citoyen=citoyenRepository.findById(id).get();
+        citoyen.setEtat("decedee");
+        citoyen.setDateDeces(formDeces.getDateDeces());
+        citoyenRepository.save(citoyen);
     }
     
     

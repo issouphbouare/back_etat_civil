@@ -15,7 +15,7 @@ public class CitoyenDto {
 
     private String niciv;
 
-
+    private String etat;
     private String nom;
 
     private String prenom;

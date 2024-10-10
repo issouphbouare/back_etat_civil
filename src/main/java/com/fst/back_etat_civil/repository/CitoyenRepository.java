@@ -22,17 +22,16 @@ public interface CitoyenRepository extends JpaRepository<Citoyen, Long> {
 	Citoyen findByNiciv(String niciv);
 	
 	@Query("SELECT a FROM Citoyen a WHERE " +
-			   "CAST(a.id AS string) LIKE %:keyword% OR " +
-			   "a.nom LIKE %:keyword% OR " +
+			   
+			   "( a.nom LIKE %:keyword% OR " +
 			   "a.prenom LIKE %:keyword% OR " +
 			   "a.telephone LIKE %:keyword% OR " +
 	           "a.niciv LIKE %:keyword% OR " +
 	           "a.genre LIKE %:keyword% OR " +
 	           "a.profession.libelle LIKE %:keyword% OR " +
 	           "TO_CHAR(a.dateNaissance, 'YYYY-MM-DD') LIKE %:keyword% OR " +
-	           "a.lieuNaissance.nom LIKE %:keyword% OR " +
-	           "a.lieuNaissance.commune.cercle.region.nom LIKE %:keyword% OR " +
-	           "a.lieuNaissance.commune.cercle.nom LIKE %:keyword%")
+	           "a.lieuNaissance.commune.cercle.nom LIKE %:keyword% ) " +
+	           " AND a.etat = 'vivante' ")
 	    Page<Citoyen> searchByKeywordInAllColumns(@Param("keyword") String keyword, Pageable pageable);
 
 }

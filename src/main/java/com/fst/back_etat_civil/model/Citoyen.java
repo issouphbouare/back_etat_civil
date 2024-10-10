@@ -34,7 +34,7 @@ public class Citoyen {
     @Column(unique=true, nullable = false)
     private String niciv;
 
-
+    private String etat;
    
     private String nom;
 
@@ -42,8 +42,8 @@ public class Citoyen {
     private String prenom;
 
 
-    
     private Date dateNaissance;
+    private Date dateDeces;
     
     @Column(unique=true, nullable = true)
     private String telephone;

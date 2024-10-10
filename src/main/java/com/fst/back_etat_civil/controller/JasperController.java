@@ -1,43 +1,48 @@
 package com.fst.back_etat_civil.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.Resource;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.server.ResponseStatusException;
-
-import com.fst.back_etat_civil.dto.CitoyenDto;
-import com.fst.back_etat_civil.dto.*;
-import com.fst.back_etat_civil.service.*;
-import com.google.zxing.BarcodeFormat;
-import com.google.zxing.client.j2se.MatrixToImageWriter;
-import com.google.zxing.common.BitMatrix;
-import com.google.zxing.qrcode.QRCodeWriter;
-import com.fst.back_etat_civil.service.*;
-
-import net.sf.jasperreports.engine.JRException;
-import net.sf.jasperreports.engine.JasperExportManager;
-import net.sf.jasperreports.engine.JasperFillManager;
-import net.sf.jasperreports.engine.JasperPrint;
-import net.sf.jasperreports.engine.JasperReport;
-import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
-import net.sf.jasperreports.engine.util.JRLoader;
-import net.sf.jasperreports.repo.InputStreamResource;
-
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import javax.imageio.ImageIO;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.server.ResponseStatusException;
+
+import com.fst.back_etat_civil.dto.CercleDto;
+import com.fst.back_etat_civil.dto.CitoyenDto;
+import com.fst.back_etat_civil.dto.CommuneDto;
+import com.fst.back_etat_civil.dto.ProfessionDto;
+import com.fst.back_etat_civil.dto.RegionDto;
+import com.fst.back_etat_civil.dto.VqfDto;
+import com.fst.back_etat_civil.service.CercleService;
+import com.fst.back_etat_civil.service.CitoyenService;
+import com.fst.back_etat_civil.service.CommuneService;
+import com.fst.back_etat_civil.service.CondamnationService;
+import com.fst.back_etat_civil.service.JasperService;
+import com.fst.back_etat_civil.service.ProfessionService;
+import com.fst.back_etat_civil.service.RegionService;
+import com.fst.back_etat_civil.service.VqfService;
+import com.google.zxing.BarcodeFormat;
+import com.google.zxing.client.j2se.MatrixToImageWriter;
+import com.google.zxing.common.BitMatrix;
+import com.google.zxing.qrcode.QRCodeWriter;
+
+import net.sf.jasperreports.engine.JRException;
 
 @CrossOrigin(origins = "*")
 @RestController
